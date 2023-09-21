@@ -9,6 +9,16 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
+pg: &pg
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  # Ref: https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-ruby-on-rails-application-on-macos
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: appname
+  password: <%= ENV['APPNAME_DATABASE_PASSWORD'] %>
+
 development:
   <<: *default
   database: db/development.sqlite3
