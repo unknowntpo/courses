@@ -21,4 +21,12 @@ class Api::V1::CoursesController < ApiController
 
     render json: @course
   end
+
+  def delete
+    @course = Course.find_by(params[:id])
+    # logger.info "try to update #{@course}"
+    logger.info "try to delete #{@course}"
+
+    render json: @course
+  end
 end

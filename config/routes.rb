@@ -5,9 +5,7 @@ Rails.application.routes.draw do
       get "/courses/:course_id" => "courses#get_by_id", :as => :get_course_by_id
       post "/courses" => "courses#create", :as => :create_course
       patch "/courses/:course_id" => "courses#update", :as => :update_course
-
-
-      # TODO: update, delete chapter, unit
+      delete "/courses/:course_id" => "courses#delete", :as => :delete_course
 
     end
   end
