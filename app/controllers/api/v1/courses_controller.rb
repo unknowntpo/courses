@@ -12,4 +12,13 @@ class Api::V1::CoursesController < ApiController
 
     render json: @course
   end
+
+  def update
+    @course = Course.find_by(params[:id])
+    # logger.info "try to update #{@course}"
+    logger.info "try to udpate #{@course}"
+
+
+    render json: @course
+  end
 end
