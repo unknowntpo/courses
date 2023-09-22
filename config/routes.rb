@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   namespace :api, :defaults => {:format => :json} do
     namespace :v1 do
-      get "/courses" => "courses#index", :as => :courses
-      get "/courses/:course_id" => "courses#show", :as => :course
+      get "/courses" => "courses#index", :as => :courses 
+      get "/courses/:course_id" => "courses#get_by_id", :as => :course
       post "/courses" => "courses#create", :as => :create_courses
 
       # TODO: update, delete chapter, unit

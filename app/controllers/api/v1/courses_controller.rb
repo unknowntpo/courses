@@ -1,23 +1,15 @@
 class Api::V1::CoursesController < ApiController
   def index
+    # https://guides.rubyonrails.org/active_record_basics.html#read
     @courses = Course.all
-    render :json => {
-      :data => @courses.map{ |course|
-        {
-          :name => @course.name,
-          :lecturer => @course.lecturer
-        }
-      }
-    }
+
+    # https://guides.rubyonrails.org/layouts_and_rendering.html#rendering-json
+    render json: @courses
   end
 
-  def show
-    @course = Course.find_by_number!( params[:id] )
+  def get_by_id
+    @course = Course.find_by(params[:id])
 
-    render :json => {
-      :id => @course.id,
-      :name => @course.number,
-      :lecturer => @course.lecturer
-    }
+    render json: @course
   end
 end
