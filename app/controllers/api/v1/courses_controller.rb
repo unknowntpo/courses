@@ -7,6 +7,22 @@ class Api::V1::CoursesController < ApiController
     render json: @courses
   end
 
+  def create
+    # FIXME: course, chapter, unit should be created simultaneously  
+    logger.info "got params: #{params.inspect}"
+    @course = Course.new(:name => params[:name],
+     :lecturer => params[:lecturer],
+      :description => params[:description])
+
+    logger.info "new course are newed: #{@course.inspect}"
+    
+    if @course.save
+      render json: @course
+    else
+      render json: {:message => "failed to create new course", :status => 400} 
+    end
+  end
+
   def get_by_id
     @course = Course.find_by(params[:id])
 

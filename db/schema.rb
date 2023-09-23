@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_051415) do
 
   create_table "chapters", force: :cascade do |t|
     t.string "name"
-    t.integer "course_id", null: false
+    t.bigint "course_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_chapters_on_course_id"
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_051415) do
     t.string "name"
     t.text "description"
     t.text "content"
-    t.integer "chapter_id", null: false
+    t.bigint "chapter_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chapter_id"], name: "index_units_on_chapter_id"
