@@ -20,12 +20,12 @@ jobs:
         image: postgres:11-alpine
         ports:
           - "5432:5432"
-        env:
-          RAILS_ENV: test
-          POSTGRES_DB: rails_test
-          POSTGRES_HOST: localhost
-          POSTGRES_USER: rails
-          POSTGRES_PASSWORD: password
+#        env:
+#          RAILS_ENV: test
+#          POSTGRES_DB: rails_test
+#          POSTGRES_HOST: localhost
+#          POSTGRES_USER: rails
+#          POSTGRES_PASSWORD: password
     env:
       RAILS_ENV: test
       POSTGRES_DB: rails_test
