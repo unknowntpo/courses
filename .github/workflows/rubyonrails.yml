@@ -26,20 +26,13 @@ jobs:
           POSTGRES_HOST: localhost
           POSTGRES_USER: rails
           POSTGRES_PASSWORD: password
-          DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
-#        env:
-#          RAILS_ENV: test
-#          DATABASE_URL: "postgres://postgres:${POSTGRES_PASSWORD}@localhost:5432/$(POSTGRES_DB)"
-#          POSTGRES_DB: rails_test
-#          POSTGRES_USER: rails
-#          POSTGRES_PASSWORD: password
     env:
       RAILS_ENV: test
       POSTGRES_DB: rails_test
       POSTGRES_HOST: localhost
       POSTGRES_USER: rails
       POSTGRES_PASSWORD: password
-      DATABASE_URL: "postgres://$USER:${POSTGRES_PASSWORD}@localhost:5432/$(POSTGRES_DB)"
+      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
