@@ -42,6 +42,8 @@ jobs:
         with:
           bundler-cache: true
       # Add or replace database setup steps here
+      - name: create database
+        run: bin/rails db:create
       - name: Set up database schema
         run: bin/rails db:schema:load
       # Add or replace test runners here
