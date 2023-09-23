@@ -1,7 +1,6 @@
 class Api::V1::CoursesController < ApplicationController
 
   def index
-    # @courses = Course.all
     @courses = Course.get_all
     render json: @courses
   end

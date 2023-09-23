@@ -7,6 +7,7 @@ class Course < ApplicationRecord
         courses = Rails.cache.fetch("courses/all", expires_in: 12.hours) do
           Course.all.to_a
         end
+        logger.info "get all return all elements"
         return courses
     end
 

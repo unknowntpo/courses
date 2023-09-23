@@ -1,0 +1,15 @@
+# Ref: https://gist.github.com/pubis/1459506/4b71e9c50c9d4425acfdf2fcbd1fd9fa075782ad
+#config/redis.yml
+default:
+  host: localhost
+  port: 6379
+development:
+  db: 0
+  namespace: courses_manager_dev
+test:
+  db: 1
+  namespace: courses_manager_test
+production:
+  db: 2
+  host: 192.168.1.100
+  namespace: courses_manager_prod
