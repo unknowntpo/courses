@@ -23,7 +23,7 @@ class Api::V1::CoursesController < ApiController
     end
   end
 
-  def get_by_id
+  def show
     @course = Course.find_by(params[:id])
 
     render json: @course
