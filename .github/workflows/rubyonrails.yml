@@ -4,6 +4,8 @@
 #
 # This workflow will install a prebuilt Ruby version, install dependencies, and
 # run tests and linters.
+
+
 name: "Ruby on Rails CI"
 on:
   push:
@@ -18,13 +20,17 @@ jobs:
         image: postgres:11-alpine
         ports:
           - "5432:5432"
-        env:
-          # POSTGRES_DB: rails_test
-          POSTGRES_USER: rails
-          POSTGRES_PASSWORD: password
+#        env:
+#          RAILS_ENV: test
+#          DATABASE_URL: "postgres://postgres:${POSTGRES_PASSWORD}@localhost:5432/$(POSTGRES_DB)"
+#          POSTGRES_DB: rails_test
+#          POSTGRES_USER: rails
+#          POSTGRES_PASSWORD: password
     env:
       RAILS_ENV: test
-      DATABASE_URL: "postgres://postgres:${POSTGRES_PASSWORD}@localhost:5432/$(POSTGRES_DB)"
+      POSTGRES_DB: rails_test
+      POSTGRES_USER: rails
+      POSTGRES_PASSWORD: password
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -39,6 +45,7 @@ jobs:
       # Add or replace test runners here
       - name: Run tests
         run: bin/rake
+
 #
 #
 # lint:
