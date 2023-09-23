@@ -27,7 +27,15 @@ Rails.application.configure do
   else
     config.action_controller.perform_caching = false
 
-    config.cache_store = :null_store
+    # config.cache_store = :null_store
+
+    # https://guides.rubyonrails.org/caching_with_rails.html#activesupport-cache-rediscachestore
+    config.cache_store = :redis_cache_store, {
+      expires_in: 1.hour,
+      driver: :hiredis,
+      namespace: 'cache',
+      redis: {url: ENV.fetch('REDIS_URL', 'redis://localhost:6379/0') }
+    }
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).

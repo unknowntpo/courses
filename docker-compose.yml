@@ -13,10 +13,18 @@ services:
     volumes:
       - pg_volume:/var/lib/postgresql/data
     networks:
-      - postgres_network
+      - default_network
+  redis:
+    image: 'redis:7.2.1'
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - default
 
 networks:
-  postgres_network:
+  default_network:
     driver: bridge
 
 volumes:
