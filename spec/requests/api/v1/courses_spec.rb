@@ -4,7 +4,7 @@ RSpec.describe "Api::V1::Courses", type: :request do
   let(:api_path) { "/api/v1/courses" }
 
   describe "GET /api/v1/courses" do
-    before {get api_path}
+    before { get api_path }
     it "works! (now write some real specs)" do
       # get "/api/v1/courses"
       expect(response).to have_http_status(200)
@@ -15,7 +15,12 @@ RSpec.describe "Api::V1::Courses", type: :request do
     before { post api_path, params: course_params }
 
     context "with valid parameters" do
-      let(:course_params) { { name: "Course Name", description: "Course Description" } } # Example valid params
+      let(:course_params) { {
+        :name => "Course Name",
+        :lecturer => "Russ Cox",
+        :description => "Course Description",
+        # :chapter => []
+      } } # Example valid params
       it 'new courses should be created' do
         expect(response).to have_http_status(200)
       end
@@ -23,14 +28,19 @@ RSpec.describe "Api::V1::Courses", type: :request do
     context "when we create new courses with wrong params" do
       let(:course_params) { { name: "", description: "" } } # Example invalid params
       it 'should return bad request status code' do
+        Rails.logger.debug "params: #{course_params}"
         expect(response).to have_http_status(400)
       end
     end
   end
 
   describe "GET /api/v1/courses/:id" do
-    let(:course) { FactoryBot.create(:course) } # Assuming you're using FactoryBot or a similar factory tool
-    before { get "#{api_path}/#{course.id}" }
+    # let(:course) { Course.create(:name => "Go", :lecturer => "Russ Cox", :description => "A good Go course") } # Assuming you're using FactoryBot or a similar factory tool
+    before {
+      course_params = { name: "Course Name", lecturer: "Russ Cox", description: "Course Description" }
+      post api_path, params: course_params
+      get "#{api_path}/#{course.id}"
+    }
 
     it 'returns the specified course' do
       expect(response).to have_http_status(200)
@@ -40,7 +50,7 @@ RSpec.describe "Api::V1::Courses", type: :request do
   end
 
   describe "PATCH /api/v1/courses/:id" do
-    let(:course) { FactoryBot.create(:course) }
+    let(:course) { Course.create(:name => "Go", :lecturer => "Russ Cox", :description => "A good Go course") }
     let(:updated_params) { { name: "Updated Course Name" } }
     before { patch "#{api_path}/#{course.id}", params: updated_params }
 
@@ -52,7 +62,7 @@ RSpec.describe "Api::V1::Courses", type: :request do
   end
 
   describe "DELETE /api/v1/courses/:id" do
-    let!(:course) { FactoryBot.create(:course) } # Use let! to eagerly create the course before the test runs
+    let!(:course) { Course.create(:name => "Go", :lecturer => "Russ Cox", :description => "A good Go course") } # Use let! to eagerly create the course before the test runs
     before { delete "#{api_path}/#{course.id}" }
 
     it 'deletes the course' do

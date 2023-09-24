@@ -1,7 +1,7 @@
 
 require 'faker'
 class Course < ApplicationRecord
-    validates_presence_of :name, :lecturer
+    validates_presence_of :name, :lecturer, :description
     def self.get_all
         # Course.all
         courses = Rails.cache.fetch("courses/all", expires_in: 12.hours) do
