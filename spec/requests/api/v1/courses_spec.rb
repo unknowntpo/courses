@@ -1,32 +1,41 @@
 require 'rails_helper'
 
-RSpec.describe "Api::V1::Courses", type: :request do
-  let(:api_path) { "/api/v1/courses" }
+RSpec.describe 'Api::V1::Courses', type: :request do
+  let(:api_path) { '/api/v1/courses' }
 
-  describe "GET /api/v1/courses" do
+  # create_course_and_get_course_id create course by 
+  def create_course_and_get_course_id
+
+  describe 'GET /api/v1/courses' do
     before { get api_path }
-    it "works! (now write some real specs)" do
+    it 'works! (now write some real specs)' do
       # get "/api/v1/courses"
       expect(response).to have_http_status(200)
     end
   end
 
-  describe "POST /api/v1/courses" do
+  describe 'POST /api/v1/courses' do
     before { post api_path, params: course_params }
 
-    context "with valid parameters" do
-      let(:course_params) { {
-        :name => "Course Name",
-        :lecturer => "Russ Cox",
-        :description => "Course Description",
-        # :chapter => []
-      } } # Example valid params
-      it 'new courses should be created' do
+    context 'with valid parameters' do
+      # Example valid params
+      let(:course_params) do
+        {
+          name: 'Course Name',
+          lecturer: 'Russ Cox',
+          description: 'Course Description'
+          # :chapter => []
+        }
+      end
+      it 'new courses should be created, and id should be returned' do
         expect(response).to have_http_status(200)
+        body = JSON.parse(response.body)
+        expect(body['data']).to include('id')
+        expect(body['data']['id']).not_to be_nil
       end
     end
-    context "when we create new courses with wrong params" do
-      let(:course_params) { { name: "", description: "" } } # Example invalid params
+    context 'when we create new courses with wrong params' do
+      let(:course_params) { { name: '', description: '' } } # Example invalid params
       it 'should return bad request status code' do
         Rails.logger.debug "params: #{course_params}"
         expect(response).to have_http_status(400)
@@ -34,13 +43,18 @@ RSpec.describe "Api::V1::Courses", type: :request do
     end
   end
 
-  describe "GET /api/v1/courses/:id" do
+  describe 'GET /api/v1/courses/:id' do
     # let(:course) { Course.create(:name => "Go", :lecturer => "Russ Cox", :description => "A good Go course") } # Assuming you're using FactoryBot or a similar factory tool
-    before {
-      course_params = { name: "Course Name", lecturer: "Russ Cox", description: "Course Description" }
+    before do
+      course_params = { name: 'Course Name', lecturer: 'Russ Cox', description: 'Course Description' }
       post api_path, params: course_params
-      get "#{api_path}/#{course.id}"
-    }
+      posted_data = JSON.parse(response.body)['data']
+      course_id = posted_data['id']
+      expect(course_id).not_to be_nil
+
+      # make GET request
+      get "#{api_path}/#{course_id}"
+    end
 
     it 'returns the specified course' do
       expect(response).to have_http_status(200)
@@ -49,9 +63,9 @@ RSpec.describe "Api::V1::Courses", type: :request do
     end
   end
 
-  describe "PATCH /api/v1/courses/:id" do
-    let(:course) { Course.create(:name => "Go", :lecturer => "Russ Cox", :description => "A good Go course") }
-    let(:updated_params) { { name: "Updated Course Name" } }
+  describe 'PATCH /api/v1/courses/:id' do
+    let(:course) { Course.create(name: 'Go', lecturer: 'Russ Cox', description: 'A good Go course') }
+    let(:updated_params) { { name: 'Updated Course Name' } }
     before { patch "#{api_path}/#{course.id}", params: updated_params }
 
     it 'updates the course' do
@@ -61,8 +75,11 @@ RSpec.describe "Api::V1::Courses", type: :request do
     end
   end
 
-  describe "DELETE /api/v1/courses/:id" do
-    let!(:course) { Course.create(:name => "Go", :lecturer => "Russ Cox", :description => "A good Go course") } # Use let! to eagerly create the course before the test runs
+  describe 'DELETE /api/v1/courses/:id' do
+    # Use let! to eagerly create the course before the test runs
+    let!(:course) do
+      Course.create(name: 'Go', lecturer: 'Russ Cox', description: 'A good Go course')
+    end
     before { delete "#{api_path}/#{course.id}" }
 
     it 'deletes the course' do
