@@ -3,8 +3,12 @@ require 'rails_helper'
 RSpec.describe 'Api::V1::Courses', type: :request do
   let(:api_path) { '/api/v1/courses' }
 
-  # create_course_and_get_course_id create course by 
-  def create_course_and_get_course_id
+  def validate_course_id_in_response(response_body)
+    posted_data = JSON.parse(response_body)['data']
+    course_id = posted_data['id']
+    expect(course_id).not_to be_nil
+    course_id
+  end
 
   describe 'GET /api/v1/courses' do
     before { get api_path }
@@ -29,15 +33,12 @@ RSpec.describe 'Api::V1::Courses', type: :request do
       end
       it 'new courses should be created, and id should be returned' do
         expect(response).to have_http_status(200)
-        body = JSON.parse(response.body)
-        expect(body['data']).to include('id')
-        expect(body['data']['id']).not_to be_nil
+        validate_course_id_in_response(response.body)
       end
     end
     context 'when we create new courses with wrong params' do
       let(:course_params) { { name: '', description: '' } } # Example invalid params
       it 'should return bad request status code' do
-        Rails.logger.debug "params: #{course_params}"
         expect(response).to have_http_status(400)
       end
     end
@@ -48,16 +49,15 @@ RSpec.describe 'Api::V1::Courses', type: :request do
     before do
       course_params = { name: 'Course Name', lecturer: 'Russ Cox', description: 'Course Description' }
       post api_path, params: course_params
-      posted_data = JSON.parse(response.body)['data']
-      course_id = posted_data['id']
-      expect(course_id).not_to be_nil
-
+      validate_course_id_in_response(response.body)
+      course_id = response.body['data']['id']
       # make GET request
       get "#{api_path}/#{course_id}"
     end
 
     it 'returns the specified course' do
       expect(response).to have_http_status(200)
+      # expect(response.body['data']).to
       # Optionally, test for the presence of specific data in the response:
       # expect(response.body).to include(course.name)
     end
