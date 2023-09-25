@@ -23,4 +23,19 @@ Things you may want to cover:
 
 * Deployment instructions
 
+swagger:
+
+Use this comand to generate rswag integration test
+
+```
+$ rails g rspec:swagger API::V1::CoursesController --spec_path integration
+
+Generate swagger yaml file
+
+```
+$ rake rswag
+```
+
+Ref: [Rswag Github](https://github.com/rswag/rswag#getting-started)
+
 * ...
