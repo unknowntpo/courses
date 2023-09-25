@@ -3,11 +3,12 @@ require 'rails_helper'
 RSpec.describe 'Api::V1::Courses', type: :request do
   let(:api_path) { '/api/v1/courses' }
 
-  def validate_course_id_in_response(response_body)
-    posted_data = JSON.parse(response_body)['data']
-    course_id = posted_data['id']
-    expect(course_id).not_to be_nil
-    course_id
+  def get_resp_body_from_resp(resp)
+    JSON.parse(resp.body)
+  end
+
+  def get_resp_data_from_resp(_resp)
+    get_resp_body_from_resp(_resp)['data']
   end
 
   describe 'GET /api/v1/courses' do
@@ -33,7 +34,8 @@ RSpec.describe 'Api::V1::Courses', type: :request do
       end
       it 'new courses should be created, and id should be returned' do
         expect(response).to have_http_status(200)
-        validate_course_id_in_response(response.body)
+        data = get_resp_data_from_resp(response)
+        expect(data['id']).not_to be_nil
       end
     end
     context 'when we create new courses with wrong params' do
@@ -49,7 +51,10 @@ RSpec.describe 'Api::V1::Courses', type: :request do
     before do
       course_params = { name: 'Course Name', lecturer: 'Russ Cox', description: 'Course Description' }
       post api_path, params: course_params
-      validate_course_id_in_response(response.body)
+      resp_data = get_resp_data_from_resp(response)
+      course_id = resp_data['id']
+      expect(course_id).not_to be_nil
+
       course_id = response.body['data']['id']
       # make GET request
       get "#{api_path}/#{course_id}"
@@ -57,6 +62,8 @@ RSpec.describe 'Api::V1::Courses', type: :request do
 
     it 'returns the specified course' do
       expect(response).to have_http_status(200)
+      resp_data = get_resp_data_from_resp(response)
+      expect(resp_data['name']).to eq(course_params[:name])
       # expect(response.body['data']).to
       # Optionally, test for the presence of specific data in the response:
       # expect(response.body).to include(course.name)

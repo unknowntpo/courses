@@ -1,5 +1,4 @@
 class Api::V1::CoursesController < ApplicationController
-
   def index
     @courses = Course.get_all
     render json: @courses
@@ -13,7 +12,7 @@ class Api::V1::CoursesController < ApplicationController
     end
 
     if @course.save
-      render json: { "data": @course, "status": 200 }, status: 200
+      render json: { "data": @course }, status: 200
     else
       # TODO: handle different type of error
       render json: { "message": 'failed to create new course', "status": 400 }, status: 400
@@ -38,8 +37,9 @@ class Api::V1::CoursesController < ApplicationController
     params.permit(
       :name,
       :lecturer,
-      :description,
-    # :chapters => []
+      :description
+      # :chapters => []
     )
   end
 end
+
