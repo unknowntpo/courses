@@ -1,11 +1,9 @@
-require 'faker'
-
 FactoryBot.define do
-  factory :course do
+  factory :unit do
     name { Faker::Book.name }
-    lecturer { Faker::Name.name }
     description { Faker::Lorem.word }
+    content { Faker::Lorem.word }
+    sequence(:position) { |n| n }
     # add other default attributes here as needed
   end
 end
-
