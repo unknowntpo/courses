@@ -9,6 +9,7 @@ services:
     environment:
       POSTGRES_USER: courses_manager
       POSTGRES_PASSWORD: courses_manager
+      POSTGRES_HOST_AUTH_METHOD: trust
       # POSTGRES_DB: courses_manager_pg
     volumes:
       - pg_volume:/var/lib/postgresql/data
