@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :unit do
-    name { Faker::Book.name }
+    name { Faker::Name.name }
     description { Faker::Lorem.word }
     content { Faker::Lorem.word }
     sequence(:position) { |n| n }

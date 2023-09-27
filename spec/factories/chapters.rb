@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :chapter do
-    name { Faker::Book.name }
+    name { Faker::Name.name }
     sequence(:position) { |n| n }
   end
 end
