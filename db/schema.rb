@@ -11,12 +11,10 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_09_21_051415) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "chapters", force: :cascade do |t|
     t.string "name"
-    t.bigint "course_id", null: false
+    t.integer "course_id", null: false
+    t.integer "position", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_chapters_on_course_id"
@@ -34,7 +32,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_051415) do
     t.string "name"
     t.text "description"
     t.text "content"
-    t.bigint "chapter_id", null: false
+    t.integer "chapter_id", null: false
+    t.integer "position", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chapter_id"], name: "index_units_on_chapter_id"

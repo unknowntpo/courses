@@ -8,6 +8,13 @@
 
 require 'faker'
 
-100.times do
-    Course.create!(:name => Faker::ProgrammingLanguage.name, :lecturer => Faker::ProgrammingLanguage.creator )
+5.times do
+  c = FactoryBot.create(:course)
+  5.times do
+    ch = FactoryBot.create(:chapter, course_id: c.id)
+    5.times do
+      FactoryBot.create(:unit, chapter_id: ch.id)
+    end
+  end
 end
+
