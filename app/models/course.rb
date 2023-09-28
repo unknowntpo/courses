@@ -1,23 +1,14 @@
-require 'faker'
 class Course < ApplicationRecord
   has_many :chapters
-    validates_presence_of :name, :lecturer, :description
-    accepts_nested_attributes_for :chapters
-    
-    def self.get_all
-        # Course.all
-        courses = Rails.cache.fetch("courses/all", expires_in: 12.hours) do
-          Course.all.to_a
-        end
-        logger.info "get all return all elements"
-        return courses
-    end
+  validates_presence_of :name, :lecturer, :description, :chapters
+  accepts_nested_attributes_for :chapters
 
-    def find_by_number!
-      # TODO: complete the imlementation
-        {
-            :name => Faker::ProgrammingLanguage.name,
-            :lecturer => Faker::ProgrammingLanguage.creator 
-        }
+  def self.get_all
+    # Course.all
+    courses = Rails.cache.fetch("courses/all", expires_in: 12.hours) do
+      Course.all.to_a
     end
+    logger.info "get all return all elements"
+    return courses
+  end
 end
