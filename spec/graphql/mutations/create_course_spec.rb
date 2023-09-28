@@ -8,56 +8,54 @@ module Mutations
         last_name = 'Doe'
         email = 'johndoe@example.com'
 
-        movies = [
-          { title: 'Movie1', year: 2022, genre: 'Action' },
-          { title: 'Movie2', year: 2021, genre: 'Drama' }
+        chapters = [
+          { title: 'Chapter1', year: 2022, genre: 'Action' },
+          { title: 'Chapter2', year: 2021, genre: 'Drama' }
         ]
 
-        post '/graphql', params: { query: _query(first_name, last_name, email, movies) }
+        post '/graphql', params: { query: _query(first_name, last_name, email, chapters) }
         body = JSON.parse(response.body)
         puts "body: #{body.inspect}"
-        data = body['data']['createUser']['user']
+        data = body['data']['createCourse']['course']
 
-        new_user = ::User.last
+        new_course = ::Course.last
 
         expect(data).to include(
-          'id' => new_user.id.to_s,
-          'firstName' => new_user.first_name,
-          'lastName' => new_user.last_name,
-          'email' => new_user.email,
-          'movies' => a_collection_containing_exactly(
-            *movies.map do |movie|
-              hash_including('title' => movie[:title], 'year' => movie[:year], 'genre' => movie[:genre])
+          'id' => new_course.id.to_s,
+          'firstName' => new_course.first_name,
+          'lastName' => new_course.last_name,
+          'email' => new_course.email,
+          'chapters' => a_collection_containing_exactly(
+            *chapters.map do |chapter|
+              hash_including('title' => chapter[:title], 'year' => chapter[:year], 'genre' => chapter[:genre])
             end
           )
         )
       end
     end
 
-    def _query(first_name, last_name, email, movies)
-      movies_input = movies.map do |movie|
-        "{ title: \"#{movie[:title]}\", year: #{movie[:year]}, genre: \"#{movie[:genre]}\" }"
+    def _query(first_name, last_name, email, chapters)
+      chapters_input = chapters.map do |chapter|
+        "{ title: \"#{chapter[:title]}\", year: #{chapter[:year]}, genre: \"#{chapter[:genre]}\" }"
       end.join(', ')
 
-      puts "movies_input: #{movies_input.inspect}"
+      puts "chapters_input: #{chapters_input.inspect}"
 
       <<~GQL
         mutation {
-          createUser(input: {
+          createCourse(input: {
             firstName: "#{first_name}",
             lastName: "#{last_name}",
             email: "#{email}",
-            movies: [#{movies_input}]
+            chapters: [#{chapters_input}]
           }) {
-            user {
+            course {
               id
-              firstName
-              lastName
-              email
-              movies {
-                title
-                year
-                genre
+              name
+              description
+              chapters {
+                name
+                description
               }
             }
           }

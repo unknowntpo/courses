@@ -13,5 +13,8 @@ Rails.application.routes.draw do
     end
   end
 
+  mount GraphiQL::Rails::Engine, at: '/graphiql', graphql_path: 'graphql#execute' if Rails.env.development?
+  post '/graphql', to: 'graphql#execute'
+
   # root "courses#index"
 end

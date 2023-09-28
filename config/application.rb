@@ -1,6 +1,7 @@
 require_relative 'boot'
 
 require 'rails/all'
+require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -24,5 +25,10 @@ module CoursesManager
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.cache_store = :redis_cache_store
+
+    # for graphiql
+    # Add back session store https://stackoverflow.com/a/37140228
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: '_namespace_key'
   end
 end

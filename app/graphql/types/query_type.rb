@@ -25,5 +25,11 @@ module Types
     def test_field
       "Hello World!"
     end
+
+    
+    field :courses, Types::CourseType.connection_type, null: false
+    def courses
+      Course.all
+    end
   end
 end

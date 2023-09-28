@@ -39,3 +39,28 @@ $ rake rswag
 Ref: [Rswag Github](https://github.com/rswag/rswag#getting-started)
 
 * ...
+
+## Graphql
+
+Get all courses
+
+```
+query {
+  courses {
+    edges {
+      cursor
+      node {
+        name
+        lecturer
+        description  
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+  }
+}
+```

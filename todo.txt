@@ -1,0 +1,29 @@
+-- Spec
+
+spec/graphql/mutatation/create_course_spec.rb
+spec/graphql/mutatation/update_course_spec.rb
+
+spec/graphql/mutatation/update_course_spec.rb
+spec/graphql/mutatation/update_chapter_spec.rb
+spec/graphql/mutatation/update_unit_spec.rb
+
+spec/graphql/mutatation/delete_course_spec.rb
+spec/graphql/mutatation/delete_chapter_spec.rb
+spec/graphql/mutatation/delete_unit_spec.rb
+
+spec/graphql/query/course_connection_spec.rb
+spec/graphql/query/course_connection_spec.rb
+
+-- App
+
+/app/graphql/types/chapter_input_type.rb
+/app/graphql/types/unit_input_type.rb
+
+/app/graphql/types/course_type.rb
+/app/graphql/types/chapter_type.rb
+/app/graphql/types/unit_type.rb
+
+
+
+
+
