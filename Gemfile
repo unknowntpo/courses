@@ -46,6 +46,8 @@ gem 'bootsnap', require: false
 # So that swagger UI can access our API.
 gem 'rack-cors'
 
+gem 'graphql'
+
 # for db:seed
 gem 'faker'
 
@@ -57,6 +59,7 @@ group :development, :test do
   # for swag doc
   gem 'factory_bot_rails'
   gem 'rswag'
+  gem 'graphiql-rails'
 end
 
 group :development do

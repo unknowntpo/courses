@@ -1,4 +1,3 @@
-
 require 'faker'
 class Course < ApplicationRecord
     validates_presence_of :name, :lecturer, :description
