@@ -2,11 +2,12 @@
 
 module Types
   class ChapterType < Types::BaseObject
-    field :id, ID, null: false
+    field :id, ID
     field :name, String
-    field :course_id, Integer, null: false
-    field :position, Integer, null: false
-    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
-    field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
+    field :course_id, Integer
+    field :position, Integer
+    field :created_at, GraphQL::Types::ISO8601DateTime
+    field :updated_at, GraphQL::Types::ISO8601DateTime
+    field :units, [UnitType]
   end
 end
