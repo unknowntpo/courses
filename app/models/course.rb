@@ -1,6 +1,6 @@
 class Course < ApplicationRecord
   has_many :chapters
-  validates_presence_of :name, :lecturer, :description, :chapters
+  validates_presence_of :name, :lecturer, :description
   accepts_nested_attributes_for :chapters
 
   def self.get_all
