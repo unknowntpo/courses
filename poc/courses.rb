@@ -25,8 +25,9 @@ module POC
     end
 
     def self.show(_id)
-      c =  $course_table.find { |course| course.id == _id }
+      c = $course_table.find { |course| course.id == _id }
       puts "c: #{c.inspect}"
+      c
     end
 
     # info is a Hash which stores info about what we want to udpate
@@ -61,13 +62,24 @@ def main
 
   $course_table[0].name = 'Javascript'
 
+  idxs = $course_table.each_with_index.map do |c, i|
+    i
+  end
+  puts "idxs: #{idxs}"
+
+  name_with_suffix = $course_table.each_with_index.map do |c, i|
+    "#{c.name}#{i}"
+  end
+  puts "namewithsuffix: #{name_with_suffix}"
+
   POC::Course.update(1, { "name": 'Cpp', "lecturer": 'Alian' })
   POC::Course.update(2, { "name": 'York', "lecturer": 'Alian' })
   POC::Course.show(1)
   POC::Course.show(2)
 
-  POC::Course.delete(1)
-  POC::Course.show(1)
+  # POC::Course.delete(1)
+  c = POC::Course.show(1)
+
 end
 
 main
