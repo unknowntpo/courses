@@ -9,22 +9,35 @@ module Mutations
     argument :input, Types::CourseInputType, required: true
 
     def resolve(input:)
-      puts "input is hash ?: #{input.is_h?}"
-      puts "hash of input #{input.class}"
+      # puts "input #{input.inspect}"
+      
+      puts "name #{input[:name]}"
       course_attrs= input.to_h.except(:chapters)
+      
       course = ::Course.new(course_attrs)
+
+      puts "attrs #{course.inspect}"
       
       chapter_attrs = input[:chapters]
 
-      chapters = chapter_attrs.map do |chapter_attr|
-        Chapter.new(chapter_attr)
+      
+
+      chapters = chapter_attrs.map do |chapter_attr,i|
+        args = chapter_attr.to_h
+        args[:course_id]= course.id
+        args[:position] = i
+        Chapter.new(args)
       end
+
+      puts "attrs #{chapters.inspect}"
 
       return { user: nil, errors: course.errors.full_messages } unless course.valid?
 
       course.chapters = chapters
+      
+      { course: nil, errors: course.errors.full_messages } unless course.save
 
-      raise GraphQL::ExecutionError.new "Error creating course", extensions: course.errors.to_hash unless course.save
+      # raise GraphQL::ExecutionError.new "Error creating course", extensions: course.errors.to_hash unless course.save
 
       { course: course }
     end
