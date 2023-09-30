@@ -10,8 +10,7 @@ module Mutations
 
     def resolve(id:)
       course = ::Course.find(id)
-      raise GraphQL::ExecutionError.new "Error deleting course", extensions: course.errors.to_hash unless course.destroy
-
+      { course: nil, errors: course.errors.full_messages } unless course.destroy
       { course: course }
     end
   end
