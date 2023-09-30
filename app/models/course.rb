@@ -1,5 +1,5 @@
 class Course < ApplicationRecord
-  has_many :chapters
+  has_many :chapters, :dependent => :destroy
   validates_presence_of :name, :lecturer, :description
   accepts_nested_attributes_for :chapters
 
