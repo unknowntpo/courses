@@ -4,7 +4,7 @@ FactoryBot.define do
     name { Faker::Name.name }
     description { Faker::Lorem.word }
     content { Faker::Lorem.word }
-    sequence(:position) { |n| n }
+    sequence(:position) { |n| n - 1 }
     # add other default attributes here as needed
   end
 end
