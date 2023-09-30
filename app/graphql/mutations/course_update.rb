@@ -7,11 +7,11 @@ module Mutations
     field :course, Types::CourseType, null: false
 
     argument :id, ID, required: true
-    argument :course_input, Types::CourseInputType, required: true
+    argument :input, Types::CourseInputType, required: true
 
-    def resolve(id:, course_input:)
+    def resolve(id:, input:)
       course = ::Course.find(id)
-      raise GraphQL::ExecutionError.new "Error updating course", extensions: course.errors.to_hash unless course.update(**course_input)
+      raise GraphQL::ExecutionError.new "Error updating course", extensions: course.errors.to_hash unless course.update(**input)
 
       { course: course }
     end
