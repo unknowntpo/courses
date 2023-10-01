@@ -91,14 +91,55 @@ application up and running.</p>
   <li>
     <p>Deployment instructions</p>
   </li>
-  <li>
-    <p>…</p>
-  </li>
 </ul>
+
+<p>swagger:</p>
+
+<p>Use this comand to generate rswag integration test</p>
+
+<p>```
+$ rails g rspec:swagger API::V1::CoursesController –spec_path integration</p>
+
+<p>Generate swagger yaml file</p>
+
+<p><code>
+$ rake rswag
+</code></p>
+
+<p>Ref: <a href="https://github.com/rswag/rswag#getting-started">Rswag Github</a></p>
+
+<ul>
+  <li>…</li>
+</ul>
+
+<h2 id="graphql">Graphql</h2>
+
+<p>Get all courses</p>
+
+<p><code>
+query {
+  courses {
+    edges {
+      cursor
+      node {
+        name
+        lecturer
+        description  
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+  }
+}
+</code></p>
 </div></div>
 
       <div id="footer">
-  Generated on Mon Sep 25 10:04:52 2023 by
+  Generated on Sun Oct  1 14:24:03 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>
