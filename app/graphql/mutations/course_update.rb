@@ -11,8 +11,8 @@ module Mutations
 
     def resolve(id:, input:)
       course = ::Course.find(id)
-      raise GraphQL::ExecutionError.new "Error updating course", extensions: course.errors.to_hash unless course.update(**input)
-
+      # TODO: in model layer, validate :position
+      { course: nil, errors: course.errors.full_messages } unless course.update(**input)
       { course: course }
     end
   end

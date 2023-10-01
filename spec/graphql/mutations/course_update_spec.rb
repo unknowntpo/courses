@@ -31,7 +31,7 @@ module Mutations
       end
 
       it "updates a course" do
-        post "/graphql", params: { query: mutation, variables: variables }
+        post "/graphql", params: { query: mutation, variables: variables.to_json }
         body = JSON.parse(response.body)
         puts "body: #{body.inspect}"
         data = body["data"]["courseUpdate"]["course"]
@@ -89,9 +89,10 @@ module Mutations
 
       it "should be reordered" do
         puts "variables: #{JSON.pretty_generate(variables)}"
-        post "/graphql", params: { query: mutation, variables: variables }
+        post "/graphql", params: { query: mutation, variables: variables.to_json }
+
         body = JSON.parse(response.body)
-        puts "body: #{body.inspect}"
+        puts " body : #{body.inspect}"
         data = body["data"]["courseUpdate"]["course"]
 
         puts "course:#{course}"
@@ -102,6 +103,7 @@ module Mutations
                           "lecturer" => course.lecturer,
                           "description" => variables[:input][:input][:description],
                         )
+
       end
     end
   end
