@@ -23,6 +23,12 @@ Things you may want to cover:
 
 * Deployment instructions
 
+* Documentation
+
+Use `yard` to generate latest documentation.
+
+Then use `yard server` to run local yard server.
+
 swagger:
 
 Use this comand to generate rswag integration test
