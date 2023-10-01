@@ -2,9 +2,11 @@
 
 module Mutations
   class CourseCreate < BaseMutation
+    # add
     description "Creates a new course"
 
     field :course, Types::CourseType, null: true
+    field :errors, [String], null: false
 
     argument :input, Types::CourseInputType, required: true
 
