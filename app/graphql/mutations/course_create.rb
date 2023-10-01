@@ -4,7 +4,7 @@ module Mutations
   class CourseCreate < BaseMutation
     description "Creates a new course"
 
-    field :course, Types::CourseType, null: false
+    field :course, Types::CourseType, null: true
 
     argument :input, Types::CourseInputType, required: true
 
@@ -32,6 +32,7 @@ module Mutations
         chapter
       end
 
+      puts "errors: #{course.errors.full_messages}"
       return { course: nil, errors: course.errors.full_messages } unless course.valid?
 
       course.chapters = chapters

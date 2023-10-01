@@ -2,7 +2,7 @@
 
 module Types
   class ChapterInputType < Types::BaseInputObject
-    argument :id, ID, required: true
+    argument :id, ID, required: false
     argument :name, String, required: false
     argument :course_id, Int, required: false
     argument :position, Int, required: false
