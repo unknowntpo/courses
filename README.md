@@ -7,13 +7,23 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version: `3.2.2`
 
 * System dependencies
 
-* Configuration
+gem I used
+
+* FactoryBot
+* 
+
 
 * Database creation
+
+```
+$ rails db:setup
+$ rails db:migrate
+$ rails db:seed
+```
 
 * Database initialization
 
@@ -29,22 +39,6 @@ Use `yard` to generate latest documentation.
 
 Then use `yard server` to run local yard server.
 
-swagger:
-
-Use this comand to generate rswag integration test
-
-```
-$ rails g rspec:swagger API::V1::CoursesController --spec_path integration
-
-Generate swagger yaml file
-
-```
-$ rake rswag
-```
-
-Ref: [Rswag Github](https://github.com/rswag/rswag#getting-started)
-
-* ...
 
 ## Graphql
 
@@ -70,3 +64,8 @@ query {
   }
 }
 ```
+
+Unfinished:
+
+- Use Dataloader to avoid (N + 1) problem.
+- Use cache to avoid querying DB too often.
