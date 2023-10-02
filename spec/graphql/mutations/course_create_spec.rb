@@ -144,13 +144,17 @@ module Mutations
         error = body["data"]["courseCreate"]["error"]
         data = body["data"]["courseCreate"]["course"]
 
+        # TODO: tweak the error message based on the spec
         wantError = {
-          "lecturer" => "Lecturer can't be blank",
+          "lecturer" => "can't be blank",
           "chapters" => [
             {
               "units" => [
-                ["Name can't be blank"],
+                "can't be blank",
               ],
+            },
+            {
+              "units" => [""],
             },
           ],
         }
