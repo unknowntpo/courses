@@ -5,5 +5,5 @@ class Chapter < ApplicationRecord
   accepts_nested_attributes_for :units
 
   # https://guides.rubyonrails.org/active_record_validations.html#uniqueness
-  validates :position, uniqueness: true
+  validates :position, uniqueness: { scope: :course_id }
 end
