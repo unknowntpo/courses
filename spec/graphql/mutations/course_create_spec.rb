@@ -22,7 +22,7 @@ module Mutations
               }
             }
           }
-          errors
+          error
         }
       }
         GQL
@@ -140,24 +140,22 @@ module Mutations
       it "creates a course" do
         post "/graphql", params: { query: mutation, variables: variables }
         body = JSON.parse(response.body)
-        puts "body: #{body.inspect}"
-        errors = body["data"]["courseCreate"]["errors"]
+        puts "body: #{JSON.pretty_generate(body)}"
+        error = body["data"]["courseCreate"]["error"]
         data = body["data"]["courseCreate"]["course"]
 
-        wantErrors = {
-          "lecturer": "Lecturer can't be blank",
-          "chapters": [
+        wantError = {
+          "lecturer" => "Lecturer can't be blank",
+          "chapters" => [
             {
-              "units": [
-                {
-                  "name": "Name can't be blank",
-                },
+              "units" => [
+                ["Name can't be blank"],
               ],
             },
           ],
         }
         expect(data).to be_nil
-        expect(errors).to eq(wantErrors)
+        expect(JSON.parse(error)).to eq(wantError)
       end
     end
   end
