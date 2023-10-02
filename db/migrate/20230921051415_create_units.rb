@@ -1,11 +1,11 @@
 class CreateUnits < ActiveRecord::Migration[7.0]
   def change
     create_table :units do |t|
-      t.string :name
-      t.text :description
-      t.text :content
+      t.string :name, null: false
+      t.text :description, null: true
+      t.text :content, null: false
       t.references :chapter, null: false, foreign_key: true
-      t.integer :position, null: false
+      t.integer :position
 
       t.timestamps
     end

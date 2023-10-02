@@ -15,8 +15,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_051415) do
   enable_extension "plpgsql"
 
   create_table "chapters", force: :cascade do |t|
-    t.string "name"
-    t.integer "course_id", null: false
+    t.string "name", null: false
+    t.bigint "course_id", null: false
     t.integer "position", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -24,19 +24,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_051415) do
   end
 
   create_table "courses", force: :cascade do |t|
-    t.string "name"
-    t.string "lecturer"
+    t.string "name", null: false
+    t.string "lecturer", null: false
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "units", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.text "description"
-    t.text "content"
-    t.integer "chapter_id", null: false
-    t.integer "position", null: false
+    t.text "content", null: false
+    t.bigint "chapter_id", null: false
+    t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["chapter_id"], name: "index_units_on_chapter_id"

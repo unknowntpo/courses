@@ -4,123 +4,93 @@ require "json"
 
 module Mutations
   class CourseCreate < BaseMutation
-    # add
     description "Creates a new course"
 
     field :course, Types::CourseType, null: true
-    field :error, String, null: false
+    field :error, String, null: true
 
     argument :input, Types::CourseInputType, required: true
 
+    # new resolve
+
     def resolve(input:)
-      course_attrs = input.to_h.except(:chapters)
+      course_attrs = input.to_h.symbolize_keys
+      errors = validate_input(course_attrs)
 
-      course_error = {}
+      return { course: nil, error: errors.to_json } if errors.any?
 
-      course = ::Course.new(course_attrs)
-      course.save unless course.valid?
-      course_error[:lecturer] = course.errors.messages[:lecturer].join if course.errors.messages[:lecturer]
-
-      chapter_attrs = input[:chapters]
-      chapters_errors = []
-
-      chapters = chapter_attrs.each_with_index.map do |chapter_attr, i|
-        chapter_error = {}
-        units_errors = []
-        args = chapter_attr.to_h.except(:units)
-        args[:course_id] = course.id
-        args[:position] = i
-
-        chapter = ::Chapter.new(args)
-        chapter.save unless chapter.valid?
-
-        unit_attrs = chapter_attr[:units]
-        chapter.units = unit_attrs.each_with_index.map do |unit_attr, j|
-          args = unit_attr.to_h
-          args[:chapter_id] = chapter.id
-          args[:position] = j
-          unit = ::Unit.new(args)
-          unit.save unless unit.valid?
-          units_errors << unit.errors.messages[:name].join if unit.errors.messages[:name]
-          unit
+      # Start transaction and create records
+      course = nil
+      Course.transaction do
+        course = Course.create!(course_attrs.except(:chapters))
+        course_attrs[:chapters].each do |chapter_attr|
+          chapter_attr[:course_id] = course.id
+          chapter = Chapter.create!(chapter_attr.to_h.except(:units))
+          chapter_attr["units"]&.each do |unit_attr|
+            unit_attr[:chapter_id] = chapter.id
+            unit = Unit.create!(unit_attr.to_h)
+          end
         end
-
-        chapter_error[:units] = units_errors unless units_errors.empty?
-        chapters_errors << chapter_error unless chapter_error.empty? # Only add chapter errors if there are any
-        chapter
       end
 
-      course_error[:chapters] = chapters_errors unless chapters_errors.empty?
-
-      return { course: nil, error: course_error.to_json } unless course.valid? && chapters_errors.empty?
-
-      course.chapters = chapters
       { course: course, error: nil }
+    rescue ActiveRecord::Rollback => e
+      # Handle any unexpected exceptions here.
+      { course: nil, error: { base: e.message } }
     end
 
-    # def resolve(input:)
-    #   course_attrs = input.to_h.except(:chapters)
+    def validate_input(attrs)
+      errors = {}
 
-    #   course_error = {}
-    #   course_error[:chapters] = []
+      # 1. Validate course
+      course = Course.new(attrs.except(:chapters))
+      errors.merge!(course.errors.messages) unless course.valid?
 
-    #   course = ::Course.new(course_attrs)
-    #   if course.valid?
-    #     course = course.save
-    #   else
-    #     course_error.merge!(course.errors.messages.except(:course))
-    #   end
+      # 2. Validate chapters
 
-    #   puts "course.eerror: #{course.errors.to_json}"
+      chapters_errors = []
+      attrs[:chapters]&.each_with_index do |chapter_attr, chapter_index|
+        chapter_error = validate_chapter(chapter_attr, chapter_index)
+        puts "chapter_error: #{chapter_error}"
+        chapters_errors << chapter_error unless chapter_error.empty?
+      end
 
-    #   puts "course.eerror: #{course_error}"
+      puts "chapters_errors length #{chapters_errors.length > 0}"
 
-    #   chapter_attrs = input[:chapters]
+      errors[:chapters] = chapters_errors if chapters_errors.length > 0
 
-    #   # TODO: Maybe we can use ::Chapter.build to solve this
-    #   chapters = chapter_attrs.each_with_index.map do |chapter_attr, i|
-    #     chapter_error = {}
-    #     chapter_error[:units] = []
-    #     args = chapter_attr.to_h.except(:units)
-    #     args[:course_id] = course.id
-    #     args[:position] = i
+      puts "errors: #{JSON.pretty_generate(errors)}"
 
-    #     chapter = ::Chapter.new(args)
-    #     if chapter.valid?
-    #       chapter = chapter.save
-    #     else
-    #       chapter_error.merge!(chapter.errors.messages.except(:chapter))
-    #     end
+      errors
+    end
 
-    #     # set up units in this chapter
-    #     unit_attrs = chapter_attr[:units]
-    #     chapter.units = unit_attrs.each_with_index.map do |unit_attr, j|
-    #       args = unit_attr.to_h
-    #       args[:chapter_id] = chapter.id
-    #       args[:position] = j
-    #       unit = ::Unit.new(args)
-    #       if unit.valid?
-    #         unit.save!
-    #       else
-    #         chapter_error[:units] << unit.errors.messages.except(:chapter)
-    #       end
-    #       unit
-    #     end
-    #     course_error[:chapters] << chapter_error unless chapter_error.empty?
-    #     chapter
-    #   end
+    # return chapter_error
+    def validate_chapter(chapter_attr, chapter_index)
+      chapter_error = {}
+      units_errors = []
 
-    #   puts "errors: #{course_error}"
-    #   return { course: nil, error: course_error.to_json } unless course.valid?
+      # validates units under this chapter
+      chapter_attr[:units]&.each_with_index do |unit_attr, unit_index|
+        unit_error = validate_unit(unit_attr, unit_index)
+        units_errors << unit_error unless unit_error.empty?
+      end
+      chapter_error[:units] = units_errors if units_errors.length > 0
 
-    #   course.chapters = chapters
+      # set position attr
+      chapter_attr[:position] = chapter_index
+      chapter = ::Chapter.new(chapter_attr.except(:units))
 
-    #   puts "at here"
+      chapter_error.merge!({ :_index => chapter_index }.merge!(chapter.errors.messages.except(:course))) unless chapter.valid?
+      chapter_error
+    end
 
-    #   { course: nil, error: course.errors.full_messages.join } unless course.save
+    # should return error hash of this unit
+    def validate_unit(unit_attr, unit_index)
+      puts "unit_ttr:#{unit_attr}"
 
-    #   # raise GraphQL::ExecutionError.new "Error creating course", extensions: course.errors.to_hash unless course.save
-    #   { course: course, error: nil }
-    # end
+      unit_attr[:position] = unit_index
+      unit = ::Unit.new(unit_attr)
+      { :_index => unit_index }.merge(unit.errors.messages.except(:chapter)) unless unit.valid?
+    end
   end
 end

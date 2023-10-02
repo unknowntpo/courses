@@ -128,7 +128,7 @@ module Mutations
                     {
                       "name": "Primary Type",
                       "description": "easy",
-                      "content": "int, string,...",
+                    # "content": "int, string,...",
                     },
                   ],
                 },
@@ -146,20 +146,31 @@ module Mutations
 
         # TODO: tweak the error message based on the spec
         wantError = {
-          "lecturer" => "can't be blank",
-          "chapters" => [
+          "lecturer": ["can't be blank"],
+          "chapters": [
             {
-              "units" => [
-                "can't be blank",
+              "units": [
+                {
+                  "_index": 0,
+                  "name": ["can't be blank"],
+                },
               ],
+              "_index": 0,
             },
             {
-              "units" => [""],
+              "units": [
+                {
+                  "_index": 0,
+                  "content": ["can't be blank"],
+                },
+              ],
+              "_index": 1,
             },
           ],
         }
         expect(data).to be_nil
-        expect(JSON.parse(error)).to eq(wantError)
+        JSON.parse(error)
+        expect(error).to eq(wantError.to_json)
       end
     end
   end
