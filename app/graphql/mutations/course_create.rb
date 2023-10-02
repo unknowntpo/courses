@@ -33,6 +33,7 @@ module Mutations
         end
       end
 
+      course = Course.includes(chapters: :units).find(course.id)
       { course: course, error: nil }
     rescue ActiveRecord::Rollback => e
       # Handle any unexpected exceptions here.
@@ -80,8 +81,18 @@ module Mutations
       chapter_attr[:position] = chapter_index
       chapter = ::Chapter.new(chapter_attr.except(:units))
 
-      chapter_error.merge!({ :_index => chapter_index }.merge!(chapter.errors.messages.except(:course))) unless chapter.valid?
-      chapter_error
+      unless chapter.valid?(:skip_course)
+        puts "chapter not valid"
+        chapter_error.merge!({ :_index => chapter_index }.merge!(chapter.errors.messages.except(:course)))
+      else
+        puts "chapter is valid"
+        # chapter has no error, but units might have some error
+        if chapter_error.has_key? :units
+          return chapter_error.merge!({ :_index => chapter_index }.merge!(chapter.errors.messages.except(:course)))
+        else
+          {}
+        end
+      end
     end
 
     # should return error hash of this unit
@@ -89,8 +100,15 @@ module Mutations
       puts "unit_ttr:#{unit_attr}"
 
       unit_attr[:position] = unit_index
+
       unit = ::Unit.new(unit_attr)
-      { :_index => unit_index }.merge(unit.errors.messages.except(:chapter)) unless unit.valid?
+      unless unit.valid?(:skip_chapter)
+        puts "invalid unit, #{unit.errors.messages.inspect}"
+        { :_index => unit_index }.merge(unit.errors.messages.except(:chapter))
+      else
+        puts "unit valid"
+        {}
+      end
     end
   end
 end
