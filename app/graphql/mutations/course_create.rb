@@ -7,7 +7,7 @@ module Mutations
     description "Creates a new course"
 
     field :course, Types::CourseType, null: true
-    field :error, String, null: true
+    field :error, GraphQL::Types::JSON, null: true
 
     argument :input, Types::CourseInputType, required: true
 
@@ -17,7 +17,7 @@ module Mutations
       course_attrs = input.to_h.symbolize_keys
       errors = validate_input(course_attrs)
 
-      return { course: nil, error: errors.to_json } if errors.any?
+      return { course: nil, error: errors } if errors.any?
 
       # Start transaction and create records
       course = nil

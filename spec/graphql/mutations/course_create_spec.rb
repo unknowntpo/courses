@@ -141,7 +141,7 @@ module Mutations
         post "/graphql", params: { query: mutation, variables: variables }
         body = JSON.parse(response.body)
         puts "body: #{JSON.pretty_generate(body)}"
-        error = body["data"]["courseCreate"]["error"]
+        error = body["data"]["courseCreate"]["error"].deep_symbolize_keys
         data = body["data"]["courseCreate"]["course"]
 
         # TODO: tweak the error message based on the spec
@@ -169,8 +169,9 @@ module Mutations
           ],
         }
         expect(data).to be_nil
-        JSON.parse(error)
-        expect(error).to eq(wantError.to_json)
+        # puts "error: #{JSON.pretty_generate(error)}"
+        # puts "wantErrror: #{JSON.pretty_generate(wantError)}"
+        expect(error).to eq(wantError)
       end
     end
   end
