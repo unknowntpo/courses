@@ -1,7 +1,6 @@
-require_relative 'boot'
+require_relative "boot"
 
-require 'rails/all'
-require "sprockets/railtie"
+require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -29,6 +28,6 @@ module CoursesManager
     # for graphiql
     # Add back session store https://stackoverflow.com/a/37140228
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore, key: '_namespace_key'
+    config.middleware.use ActionDispatch::Session::CookieStore, key: "_namespace_key"
   end
 end

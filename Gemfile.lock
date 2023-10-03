@@ -267,7 +267,6 @@ DEPENDENCIES
   redis-rails (~> 5.0)
   rspec-rails
   rswag
-  sprockets-rails
   tzinfo-data
 
 RUBY VERSION

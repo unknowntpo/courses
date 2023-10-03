@@ -60,7 +60,6 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "rswag"
   gem "graphiql-rails"
-  gem "sprockets-rails", :require => "sprockets/railtie"
 end
 
 group :development do
