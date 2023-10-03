@@ -1,3 +1,5 @@
+require "json"
+
 module Types
   class QueryType < Types::BaseObject
     field :node, Types::NodeType, null: true, description: "Fetches an object given its ID." do
@@ -21,15 +23,22 @@ module Types
 
     # TODO: remove me
     field :test_field, String, null: false,
-      description: "An example field added by the generator"
+                               description: "An example field added by the generator"
+
     def test_field
       "Hello World!"
     end
 
-    
-    field :courses, Types::CourseType.connection_type, null: false
-    def courses
+    # field :courses, Types::CoursesConnectionType,
+    #       description: "Fetches all courses with chapters and units", null: false
+
+    field :courses, Types::CourseType.connection_type,
+          description: "Fetches all courses with chapters and units", null: false
+
+    def courses()
+      puts "at here"
       Course.all
+      # return Course.includes(chapters: :units).find(id: _args.id)
     end
   end
 end
