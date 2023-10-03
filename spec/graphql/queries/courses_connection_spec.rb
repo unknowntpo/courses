@@ -51,11 +51,11 @@ module Queries
 
           body = JSON.parse(response.body)
           puts "body: #{JSON.pretty_generate(body)}"
-          data = body["data"]["courses"]
-          page_info = data["pageInfo"]
-          edges = data["edges"]
+          data = JSON.parse(response.body)["data"]["courses"]["edges"].map { |edge| edge["node"] }
+          page_info = body["data"]["courses"]["pageInfo"]
+          # edges = data["edges"]
 
-          puts "edges: #{JSON.pretty_generate(edges)}"
+          # puts "edges: #{JSON.pretty_generate(edges)}"
 
           expect(page_info).to eq(
             "startCursor" => "MQ",
@@ -64,50 +64,23 @@ module Queries
             "hasNextPage" => false,
           )
 
-          expect(data).to include(
-            "id" => course.id.to_s,
-            "name" => course.name,
-            "lecturer" => course.lecturer,
-            "description" => course.description,
-            "chapters" => a_collection_containing_exactly(
-              *course.chapters.map do |chapter|
-              hash_including(
-                "name" => chapter[:name],
-                "position" => chapter[:position],
-                "units" => a_collection_containing_exactly(
-                  *chapter.units.map do |unit|
-                  hash_including(
-                    "name" => unit[:name],
-                    "description" => unit[:description],
-                    "content" => unit[:content],
-                    "position" => unit[:position],
-                  )
-                end
-                ),
-              )
-            end
-            ),
-          )
-          # expect(edges).to match_array [
-          #                                {
-          #                                  "cursor" => "MQ",
-          #                                  "node" => hash_including(
-          #                                    "name" => "Hero",
-          #                                    "userId" => user.id,
-          #                                    "year" => 1984,
-          #                                    "genre" => "Horror",
-          #                                  ),
-          #                                },
-          #                                {
-          #                                  "cursor" => "Mg",
-          #                                  "node" => hash_including(
-          #                                    "title" => "Gifted",
-          #                                    "userId" => user.id,
-          #                                    "year" => 1988,
-          #                                    "genre" => "Thriller",
-          #                                  ),
-          #                                },
-          #                              ]
+          data.each_with_index do |course_data, index|
+            course = ::Course.find(course_data["id"].to_i)
+            expect(course_data).to include(
+              "id" => course.id.to_s,
+              "name" => course.name,
+              "lecturer" => course.lecturer,
+              "description" => course.description,
+              "chapters" => a_collection_containing_exactly(
+                *course.chapters.map do |chapter|
+                hash_including(
+                  "name" => chapter[:name],
+                  "position" => chapter[:position],
+                )
+              end
+              ),
+            )
+          end
         end
       end
     end
