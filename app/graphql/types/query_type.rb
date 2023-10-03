@@ -37,7 +37,7 @@ module Types
 
     def courses()
       puts "at here"
-      Course.all
+      Course.eager_load(chapters: :units).all
       # return Course.includes(chapters: :units).find(id: _args.id)
     end
   end
