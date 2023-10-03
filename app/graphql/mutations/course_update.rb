@@ -24,7 +24,7 @@ module Mutations
       unless course.valid?
         return { course: nil, error: { "course": course.errors } }
       end
-      { course: nil, error: { message: "failed to update" } } unless Course.where(:id => 0).update(course.attributes)
+      { course: nil, error: { message: "failed to update" } } unless Course.where(:id => id).update(course.attributes)
       { course: course.reload, error: nil }
     end
   end
