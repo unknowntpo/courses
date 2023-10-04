@@ -4,11 +4,11 @@ module Mutations
   class ChapterUpdate < BaseMutation
     description "Updates a chapter by id"
 
-    field :chapter, Types::ChapterType, null: true
-    field :error, GraphQL::Types::JSON, null: true
+    field :chapter, Types::ChapterType, description: "updated chapter", null: true
+    field :error, GraphQL::Types::JSON, description: "errors are shown here", null: true
 
-    argument :id, ID, required: true
-    argument :input, Types::ChapterInputType, required: true
+    argument :id, ID, description: "the id of the chapter you wanna update", required: true
+    argument :input, Types::ChapterInputType, "fields of the chapter", required: true
 
     def resolve(id:, input:)
       begin
@@ -19,8 +19,8 @@ module Mutations
 
       input_h = input.to_h
 
-      @chapter.assign_attributes(input_h.except(:chapters))
-      puts "course input: #{JSON.pretty_generate(@chapter.as_json)}"
+      @chapter.assign_attributes(input_h.except(:units))
+      puts "chapter input: #{JSON.pretty_generate(@chapter.as_json)}"
 
       errors = {}
 

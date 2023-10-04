@@ -36,8 +36,11 @@ module Mutations
         it "updates a chapter" do
           post "/graphql", params: { query: mutation, variables: variables.to_json }
           body = JSON.parse(response.body)
-          puts "body: #{body.inspect}"
+          puts "body: #{JSON.pretty_generate(body.to_json)}"
           data = body["data"]["chapterUpdate"]["chapter"]
+          error = body["data"]["chapterUpdate"]["error"]
+
+          expect(error).to be_nil
 
           puts "chapter:#{chapter}"
 
