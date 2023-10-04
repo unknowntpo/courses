@@ -48,26 +48,27 @@ class Course < ApplicationRecord
   # Allows the acceptance of nested attributes for chapters.
   accepts_nested_attributes_for :chapters
 
-  after_create :bust_cache
+  # after_create :bust_cache
 
   # Fetches all courses, with caching.
   # @return [Array<Course>] All courses.
   def self.all_courses
-    courses = Rails.cache.fetch(cache_key, expires_in: 12.hours) do
-      Course.all.to_a
-    end
+    # FIXME: Disable cache until we figure out how to make it behave correctly.
+    # courses = Rails.cache.fetch(cache_key, expires_in: 12.hours) do
+    #   Course.all.to_a
+    # end
     logger.info "get all return all elements"
-    return courses
+    return Course.all
   end
 
-  def self.cache_key
-    "courses/all"
-  end
+  # def self.cache_key
+  #   "courses/all"
+  # end
 
-  private
+  # private
 
-  def bust_cache
-    logger.info "cache is busted"
-    Rails.cache.delete(self.class.cache_key)
-  end
+  # def bust_cache
+  #   logger.info "cache is busted"
+  #   Rails.cache.delete(self.class.cache_key)
+  # end
 end
