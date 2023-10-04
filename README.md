@@ -7,63 +7,73 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version: `3.2.2`
+## Quick Start
 
-* System dependencies
+### Database / Cache initialization
 
-gem I used
+Use docker-compose to set up PostgreSQL and Redis.
 
-* FactoryBot
-* 
+```
+$ docker-compose up -d
+```
 
-
-* Database creation
+### Database creation and schema migration
 
 ```
 $ rails db:setup
 $ rails db:migrate
+```
+
+### Add fake data for local development
+
+```
 $ rails db:seed
 ```
 
-* Database initialization
-
 * How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+$ rails spec
+```
 
-* Deployment instructions
+## System dependencies
 
-* Documentation
+### Ruby version:
 
-Use `yard` to generate latest documentation.
+- `3.2.2`
 
-Then use `yard server` to run local yard server.
+### Gems
+* FactoryBot:
 
-
-## Graphql
-
-Get all courses
+I use it to create fake data for testing and local development, we can use
 
 ```
-query {
-  courses {
-    edges {
-      cursor
-      node {
-        name
-        lecturer
-        description  
-      }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
-    }
-  }
-}
+$ rails db:seeds to inject some fake data into database.
 ```
+
+
+### Documentation
+
+Generate latest documentation:
+
+```
+$ yard
+```
+
+run local YARD documentation server.
+
+```
+$ yard server
+```
+
+## API Specification
+
+- https://github.com/unknowntpo/courses_manager/issues/6
+
+
+## Demo App
+
+GraphQL API Endpoint: https://hahow-courses-manager-2b2aea0eb45b.herokuapp.com/graphql
 
 Unfinished:
 
