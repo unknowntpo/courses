@@ -24,10 +24,9 @@ module Mutations
         GQL
       end
       let(:course) { FactoryBot.create(:course, :with_chapters_and_units) }
-
+      let!(:chapters) { Chapter.where("course_id": course.id) }
       context "succeed" do
-        let(:chapters) { Chapter.where("course_id": course.id) }
-        let(:chapters_order) do
+        let!(:chapters_order) do
           chapters = Chapter.where("course_id": course.id)
           chapters.reverse()
           puts "chapters: #{JSON.pretty_generate(chapters.to_json)}"
@@ -36,7 +35,7 @@ module Mutations
           end
           chapters.map { |ch| [ch.id, ch.position] }.to_h
         end
-        let(:variables) do
+        let!(:variables) do
           {
             "input": {
               "courseId": course.id,
@@ -45,12 +44,14 @@ module Mutations
           }
         end
 
-        it "reorder chpaters in a course" do
+        it "reorder chapters in a course" do
           post "/graphql", params: { query: mutation, variables: variables.to_json }
           body = JSON.parse(response.body)
           puts "body: #{JSON.pretty_generate(body)}"
           data = body["data"]["chapterReorder"]["course"]
           error = body["data"]["chapterReorder"]["error"]
+
+          puts "data; #{JSON.pretty_generate(body.to_json)} "
 
           want_chapters = Chapter.where(course_id: course.id).map do |ch|
             {
@@ -69,6 +70,122 @@ module Mutations
             "chapters" => want_chapters.as_json,
             # "chapters" => chapters.map { |ch| ch.to_h },
           )
+        end
+      end
+      context "failed" do
+        context "not providing all chapters" do
+          let!(:chapters_order) do
+            chapters = Chapter.where("course_id": course.id)
+            chapters.reverse()
+
+            # discard 1 element
+            chapters = chapters.slice(0, chapters.length - 1)
+
+            puts "chapters: #{JSON.pretty_generate(chapters.to_json)}"
+
+            chapters.each_with_index.map do |ch, i|
+              ch.position = chapters.length - 1 - i
+            end
+            chapters.map { |ch| [ch.id, ch.position] }.to_h
+          end
+          let!(:variables) do
+            {
+              "input": {
+                "courseId": course.id,
+                "chaptersInput": chapters_order,
+              },
+            }
+          end
+
+          it "should return error" do
+            post "/graphql", params: { query: mutation, variables: variables.to_json }
+            body = JSON.parse(response.body)
+            puts "body: #{JSON.pretty_generate(body)}"
+            data = body["data"]["chapterReorder"]["course"]
+            error = body["data"]["chapterReorder"]["error"]
+
+            expect(error).to eq("should provide all chapters whose course_id is #{course.id}")
+            expect(data).to be_nil
+          end
+        end
+
+        context "position not in [0, chapters.length)" do
+          let!(:chapters_order) do
+            chapters = Chapter.where("course_id": course.id)
+            chapters.reverse()
+
+            puts "chapters: #{JSON.pretty_generate(chapters.to_json)}"
+
+            chapters.each_with_index.map do |ch, i|
+              ch.position = chapters.length - i
+            end
+            chapters.map { |ch| [ch.id, ch.position] }.to_h
+          end
+          let!(:variables) do
+            {
+              "input": {
+                "courseId": course.id,
+                "chaptersInput": chapters_order,
+              },
+            }
+          end
+
+          it "should return error" do
+            post "/graphql", params: { query: mutation, variables: variables.to_json }
+            body = JSON.parse(response.body)
+            puts "body: #{JSON.pretty_generate(body)}"
+            data = body["data"]["chapterReorder"]["course"]
+            error = body["data"]["chapterReorder"]["error"]
+
+            puts "chapters_order: #{JSON.pretty_generate(chapters_order)}"
+
+            expect(error[:cause]).to eq("should provide all chapters whose course_id is #{course.id}")
+            expect(data).to be_nil
+          end
+        end
+
+        context "has overlapped position" do
+          let!(:reordered_chapters) do
+            chapters = Chapter.where("course_id": course.id)
+            chapters = chapters.reverse()
+
+            puts "chapters: #{JSON.pretty_generate(chapters.to_json)}"
+
+            chapters[0].position = chapters[chapters.length - 1].position
+            chapters
+          end
+          let!(:chapters_order) do
+            reordered_chapters.map { |ch| [ch.id, ch.position] }.to_h
+          end
+          let!(:overlapped_ids) {
+            chapters = reordered_chapters
+            puts "chapters: #{JSON.pretty_generate(chapters.as_json)}"
+            # it's like {5 => [536, 537]}
+            { "#{chapters[0].position}" => [chapters[0].id, chapters[chapters.length - 1].id] }
+          }
+          let!(:variables) do
+            {
+              "input": {
+                "courseId": course.id,
+                "chaptersInput": chapters_order,
+              },
+            }
+          end
+          it "should return error" do
+            post "/graphql", params: { query: mutation, variables: variables.to_json }
+            body = JSON.parse(response.body)
+            puts "body: #{JSON.pretty_generate(body)}"
+            data = body["data"]["chapterReorder"]["course"]
+            error = body["data"]["chapterReorder"]["error"]
+
+            puts "error: #{JSON.pretty_generate(error)}"
+
+            expect(error).to include(
+              "cause" => "has position overlapped ids",
+              "overlapped ids" => overlapped_ids,
+            )
+            expect(data).to be_nil
+          end
         end
       end
     end
