@@ -18,7 +18,7 @@ module Mutations
 
       input_h = input.to_h
 
-      @unit.assign_attributes(input_h.except(:units))
+      @unit.assign_attributes(input_h)
       puts "unit input: #{JSON.pretty_generate(@unit.as_json)}"
 
       unless @unit.valid?
