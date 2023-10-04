@@ -1,23 +1,12 @@
 module Types
   class MutationType < Types::BaseObject
-    field :course_create, mutation: Mutations::CourseCreate
-    field :course_delete, mutation: Mutations::CourseDelete
-    field :course_update, mutation: Mutations::CourseUpdate
+    field :course_create, mutation: Mutations::CourseCreate, description: "Create a course with chapters and units"
+    field :course_delete, mutation: Mutations::CourseDelete, description: "Delete a course and its chapters and units"
+    field :course_update, mutation: Mutations::CourseUpdate, description: "Update fields in a course"
 
-    field :chapter_update, mutation: Mutations::ChapterUpdate
-    field :chapter_reorder, mutation: Mutations::ChapterReorder, description: "re-order chapters in a course"
+    field :chapter_update, mutation: Mutations::ChapterUpdate, description: "Update fields in a chapter"
+    field :chapter_reorder, mutation: Mutations::ChapterReorder, description: "Reorder chapters in a course"
 
-    field :chapter_delete, mutation: Mutations::ChapterDelete
-
-    field :unit_delete, mutation: Mutations::UnitDelete
-    field :unit_update, mutation: Mutations::UnitUpdate
-
-    # TODO: remove me
-    field :test_field, String, null: false,
-                               description: "An example field added by the generator"
-
-    def test_field
-      "Hello World"
-    end
+    field :unit_update, mutation: Mutations::UnitUpdate, description: "Update fields in a unit"
   end
 end
