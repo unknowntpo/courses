@@ -150,6 +150,200 @@
 
 
 
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#chapters-instance_method" title="#chapters (instance method)">#<strong>chapters</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The chapters associated with the course.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#created_at-instance_method" title="#created_at (instance method)">#<strong>created_at</strong>  &#x21d2; DateTime </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The timestamp when the course was created.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#description-instance_method" title="#description (instance method)">#<strong>description</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A description of the course.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#id-instance_method" title="#id (instance method)">#<strong>id</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The unique identifier of the course.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#lecturer-instance_method" title="#lecturer (instance method)">#<strong>lecturer</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The name of the lecturer associated with the course.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name-instance_method" title="#name (instance method)">#<strong>name</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The name of the course.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#updated_at-instance_method" title="#updated_at (instance method)">#<strong>updated_at</strong>  &#x21d2; DateTime </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The timestamp when the course was last updated.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
 
 
 
@@ -164,7 +358,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#get_all-class_method" title="get_all (class method)">.<strong>get_all</strong>  &#x21d2; Object </a>
+      <a href="#get_all-class_method" title="get_all (class method)">.<strong>get_all</strong>  &#x21d2; Array&lt;Course&gt; </a>
     
 
     
@@ -178,7 +372,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Fetches all courses, with caching.</p>
+</div></span>
   
 </li>
 
@@ -194,6 +390,686 @@
   
   
   
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="chapters=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="chapters-instance_method">
+  
+    #<strong>chapters</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>The chapters associated with the course. If a course is destroyed, its chapters will also be destroyed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/course.rb', line 40</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] chapters
+</span>  <span class='comment'>#   The chapters associated with the course. If a course is destroyed, its chapters will also be destroyed.
+</span>  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:chapters</span><span class='comma'>,</span> <span class='symbol'>:dependent</span> <span class='op'>=&gt;</span> <span class='symbol'>:destroy</span>
+
+  <span class='comment'># Validates the presence of a name and lecturer for this course.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:lecturer</span>
+
+  <span class='comment'># Allows the acceptance of nested attributes for chapters.
+</span>  <span class='id identifier rubyid_accepts_nested_attributes_for'>accepts_nested_attributes_for</span> <span class='symbol'>:chapters</span>
+
+  <span class='comment'># Fetches all courses, with caching.
+</span>  <span class='comment'># @return [Array&lt;Course&gt;] All courses.
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_all'>get_all</span>
+    <span class='comment'># Course.all
+</span>    <span class='id identifier rubyid_courses'>courses</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>courses/all</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>expires_in:</span> <span class='int'>12</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get all return all elements</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_courses'>courses</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="created_at=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="created_at-instance_method">
+  
+    #<strong>created_at</strong>  &#x21d2; <tt>DateTime</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns The timestamp when the course was created.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>DateTime</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The timestamp when the course was created.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/course.rb', line 40</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] chapters
+</span>  <span class='comment'>#   The chapters associated with the course. If a course is destroyed, its chapters will also be destroyed.
+</span>  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:chapters</span><span class='comma'>,</span> <span class='symbol'>:dependent</span> <span class='op'>=&gt;</span> <span class='symbol'>:destroy</span>
+
+  <span class='comment'># Validates the presence of a name and lecturer for this course.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:lecturer</span>
+
+  <span class='comment'># Allows the acceptance of nested attributes for chapters.
+</span>  <span class='id identifier rubyid_accepts_nested_attributes_for'>accepts_nested_attributes_for</span> <span class='symbol'>:chapters</span>
+
+  <span class='comment'># Fetches all courses, with caching.
+</span>  <span class='comment'># @return [Array&lt;Course&gt;] All courses.
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_all'>get_all</span>
+    <span class='comment'># Course.all
+</span>    <span class='id identifier rubyid_courses'>courses</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>courses/all</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>expires_in:</span> <span class='int'>12</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get all return all elements</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_courses'>courses</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="description=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="description-instance_method">
+  
+    #<strong>description</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns A description of the course.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>A description of the course.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/course.rb', line 40</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] chapters
+</span>  <span class='comment'>#   The chapters associated with the course. If a course is destroyed, its chapters will also be destroyed.
+</span>  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:chapters</span><span class='comma'>,</span> <span class='symbol'>:dependent</span> <span class='op'>=&gt;</span> <span class='symbol'>:destroy</span>
+
+  <span class='comment'># Validates the presence of a name and lecturer for this course.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:lecturer</span>
+
+  <span class='comment'># Allows the acceptance of nested attributes for chapters.
+</span>  <span class='id identifier rubyid_accepts_nested_attributes_for'>accepts_nested_attributes_for</span> <span class='symbol'>:chapters</span>
+
+  <span class='comment'># Fetches all courses, with caching.
+</span>  <span class='comment'># @return [Array&lt;Course&gt;] All courses.
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_all'>get_all</span>
+    <span class='comment'># Course.all
+</span>    <span class='id identifier rubyid_courses'>courses</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>courses/all</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>expires_in:</span> <span class='int'>12</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get all return all elements</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_courses'>courses</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="id=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="id-instance_method">
+  
+    #<strong>id</strong>  &#x21d2; <tt>Integer</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns The unique identifier of the course.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The unique identifier of the course.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/course.rb', line 40</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] chapters
+</span>  <span class='comment'>#   The chapters associated with the course. If a course is destroyed, its chapters will also be destroyed.
+</span>  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:chapters</span><span class='comma'>,</span> <span class='symbol'>:dependent</span> <span class='op'>=&gt;</span> <span class='symbol'>:destroy</span>
+
+  <span class='comment'># Validates the presence of a name and lecturer for this course.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:lecturer</span>
+
+  <span class='comment'># Allows the acceptance of nested attributes for chapters.
+</span>  <span class='id identifier rubyid_accepts_nested_attributes_for'>accepts_nested_attributes_for</span> <span class='symbol'>:chapters</span>
+
+  <span class='comment'># Fetches all courses, with caching.
+</span>  <span class='comment'># @return [Array&lt;Course&gt;] All courses.
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_all'>get_all</span>
+    <span class='comment'># Course.all
+</span>    <span class='id identifier rubyid_courses'>courses</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>courses/all</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>expires_in:</span> <span class='int'>12</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get all return all elements</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_courses'>courses</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="lecturer=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="lecturer-instance_method">
+  
+    #<strong>lecturer</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns The name of the lecturer associated with the course.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The name of the lecturer associated with the course.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/course.rb', line 40</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] chapters
+</span>  <span class='comment'>#   The chapters associated with the course. If a course is destroyed, its chapters will also be destroyed.
+</span>  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:chapters</span><span class='comma'>,</span> <span class='symbol'>:dependent</span> <span class='op'>=&gt;</span> <span class='symbol'>:destroy</span>
+
+  <span class='comment'># Validates the presence of a name and lecturer for this course.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:lecturer</span>
+
+  <span class='comment'># Allows the acceptance of nested attributes for chapters.
+</span>  <span class='id identifier rubyid_accepts_nested_attributes_for'>accepts_nested_attributes_for</span> <span class='symbol'>:chapters</span>
+
+  <span class='comment'># Fetches all courses, with caching.
+</span>  <span class='comment'># @return [Array&lt;Course&gt;] All courses.
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_all'>get_all</span>
+    <span class='comment'># Course.all
+</span>    <span class='id identifier rubyid_courses'>courses</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>courses/all</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>expires_in:</span> <span class='int'>12</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get all return all elements</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_courses'>courses</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="name=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="name-instance_method">
+  
+    #<strong>name</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns The name of the course.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The name of the course.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/course.rb', line 40</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] chapters
+</span>  <span class='comment'>#   The chapters associated with the course. If a course is destroyed, its chapters will also be destroyed.
+</span>  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:chapters</span><span class='comma'>,</span> <span class='symbol'>:dependent</span> <span class='op'>=&gt;</span> <span class='symbol'>:destroy</span>
+
+  <span class='comment'># Validates the presence of a name and lecturer for this course.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:lecturer</span>
+
+  <span class='comment'># Allows the acceptance of nested attributes for chapters.
+</span>  <span class='id identifier rubyid_accepts_nested_attributes_for'>accepts_nested_attributes_for</span> <span class='symbol'>:chapters</span>
+
+  <span class='comment'># Fetches all courses, with caching.
+</span>  <span class='comment'># @return [Array&lt;Course&gt;] All courses.
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_all'>get_all</span>
+    <span class='comment'># Course.all
+</span>    <span class='id identifier rubyid_courses'>courses</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>courses/all</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>expires_in:</span> <span class='int'>12</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get all return all elements</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_courses'>courses</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="updated_at=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="updated_at-instance_method">
+  
+    #<strong>updated_at</strong>  &#x21d2; <tt>DateTime</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns The timestamp when the course was last updated.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>DateTime</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The timestamp when the course was last updated.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/course.rb', line 40</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] chapters
+</span>  <span class='comment'>#   The chapters associated with the course. If a course is destroyed, its chapters will also be destroyed.
+</span>  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:chapters</span><span class='comma'>,</span> <span class='symbol'>:dependent</span> <span class='op'>=&gt;</span> <span class='symbol'>:destroy</span>
+
+  <span class='comment'># Validates the presence of a name and lecturer for this course.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:lecturer</span>
+
+  <span class='comment'># Allows the acceptance of nested attributes for chapters.
+</span>  <span class='id identifier rubyid_accepts_nested_attributes_for'>accepts_nested_attributes_for</span> <span class='symbol'>:chapters</span>
+
+  <span class='comment'># Fetches all courses, with caching.
+</span>  <span class='comment'># @return [Array&lt;Course&gt;] All courses.
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_all'>get_all</span>
+    <span class='comment'># Course.all
+</span>    <span class='id identifier rubyid_courses'>courses</span> <span class='op'>=</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>courses/all</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>expires_in:</span> <span class='int'>12</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='const'><span class='object_link'><a href="" title="Course (class)">Course</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>get all return all elements</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span> <span class='id identifier rubyid_courses'>courses</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
@@ -202,29 +1078,58 @@
       <div class="method_details first">
   <h3 class="signature first" id="get_all-class_method">
   
-    .<strong>get_all</strong>  &#x21d2; <tt>Object</tt> 
+    .<strong>get_all</strong>  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="" title="Course (class)">Course</a></span>&gt;</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Fetches all courses, with caching.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="" title="Course (class)">Course</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>All courses.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-30
-31
-32
-33
-34
-35
-36
-37</pre>
+53
+54
+55
+56
+57
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/course.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'app/models/course.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_all'>get_all</span>
   <span class='comment'># Course.all
@@ -244,7 +1149,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Oct  1 14:24:03 2023 by
+  Generated on Wed Oct  4 09:17:55 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>

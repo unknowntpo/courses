@@ -103,26 +103,445 @@
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>The Unit class represents a unit within a chapter. Each unit belongs to a chapter and requires a name, content, and position to be present.</p>
 
 
-
-
-
-
-
-
-  
-  
-  
-  
-  
-  
+  </div>
+</div>
+<div class="tags">
   
 
 </div>
 
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#chapter-instance_method" title="#chapter (instance method)">#<strong>chapter</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The chapter to which this unit belongs.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#content-instance_method" title="#content (instance method)">#<strong>content</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The content of the unit.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name-instance_method" title="#name (instance method)">#<strong>name</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The name of the unit.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#position-instance_method" title="#position (instance method)">#<strong>position</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The position of the unit within its chapter.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="chapter=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="chapter-instance_method">
+  
+    #<strong>chapter</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>The chapter to which this unit belongs. This association is optional.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/unit.rb', line 12</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Unit (class)">Unit</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] chapter
+</span>  <span class='comment'>#   The chapter to which this unit belongs. This association is optional.
+</span>  <span class='id identifier rubyid_belongs_to'>belongs_to</span> <span class='symbol'>:chapter</span><span class='comma'>,</span> <span class='symbol'>:optional</span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
+
+  <span class='comment'># Validates the presence of a name, content, and position for this unit.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:content</span><span class='comma'>,</span> <span class='symbol'>:position</span>
+
+  <span class='comment'># Validates the presence of a chapter for this unit, unless validation is being skipped.
+</span>  <span class='id identifier rubyid_validates'>validates</span> <span class='symbol'>:chapter</span><span class='comma'>,</span> <span class='label'>presence:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>unless:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_validation_context'>validation_context</span> <span class='op'>==</span> <span class='symbol'>:skip_chapter</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="content=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="content-instance_method">
+  
+    #<strong>content</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns The content of the unit.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The content of the unit.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/unit.rb', line 12</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Unit (class)">Unit</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] chapter
+</span>  <span class='comment'>#   The chapter to which this unit belongs. This association is optional.
+</span>  <span class='id identifier rubyid_belongs_to'>belongs_to</span> <span class='symbol'>:chapter</span><span class='comma'>,</span> <span class='symbol'>:optional</span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
+
+  <span class='comment'># Validates the presence of a name, content, and position for this unit.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:content</span><span class='comma'>,</span> <span class='symbol'>:position</span>
+
+  <span class='comment'># Validates the presence of a chapter for this unit, unless validation is being skipped.
+</span>  <span class='id identifier rubyid_validates'>validates</span> <span class='symbol'>:chapter</span><span class='comma'>,</span> <span class='label'>presence:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>unless:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_validation_context'>validation_context</span> <span class='op'>==</span> <span class='symbol'>:skip_chapter</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="name=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="name-instance_method">
+  
+    #<strong>name</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns The name of the unit.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The name of the unit.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/unit.rb', line 12</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Unit (class)">Unit</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] chapter
+</span>  <span class='comment'>#   The chapter to which this unit belongs. This association is optional.
+</span>  <span class='id identifier rubyid_belongs_to'>belongs_to</span> <span class='symbol'>:chapter</span><span class='comma'>,</span> <span class='symbol'>:optional</span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
+
+  <span class='comment'># Validates the presence of a name, content, and position for this unit.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:content</span><span class='comma'>,</span> <span class='symbol'>:position</span>
+
+  <span class='comment'># Validates the presence of a chapter for this unit, unless validation is being skipped.
+</span>  <span class='id identifier rubyid_validates'>validates</span> <span class='symbol'>:chapter</span><span class='comma'>,</span> <span class='label'>presence:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>unless:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_validation_context'>validation_context</span> <span class='op'>==</span> <span class='symbol'>:skip_chapter</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="position=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="position-instance_method">
+  
+    #<strong>position</strong>  &#x21d2; <tt>Integer</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns The position of the unit within its chapter.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The position of the unit within its chapter.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/unit.rb', line 12</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Unit (class)">Unit</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] chapter
+</span>  <span class='comment'>#   The chapter to which this unit belongs. This association is optional.
+</span>  <span class='id identifier rubyid_belongs_to'>belongs_to</span> <span class='symbol'>:chapter</span><span class='comma'>,</span> <span class='symbol'>:optional</span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
+
+  <span class='comment'># Validates the presence of a name, content, and position for this unit.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:content</span><span class='comma'>,</span> <span class='symbol'>:position</span>
+
+  <span class='comment'># Validates the presence of a chapter for this unit, unless validation is being skipped.
+</span>  <span class='id identifier rubyid_validates'>validates</span> <span class='symbol'>:chapter</span><span class='comma'>,</span> <span class='label'>presence:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>unless:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_validation_context'>validation_context</span> <span class='op'>==</span> <span class='symbol'>:skip_chapter</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+</div>
+
       <div id="footer">
-  Generated on Sun Oct  1 14:24:03 2023 by
+  Generated on Wed Oct  4 09:17:55 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>

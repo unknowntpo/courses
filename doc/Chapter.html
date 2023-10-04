@@ -103,26 +103,365 @@
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>The Chapter class represents a chapter within a course. Each chapter belongs to a course and can have multiple units. It requires a name to be present and can accept nested attributes for its units.</p>
 
 
-
-
-
-
-
-
-  
-  
-  
-  
-  
-  
+  </div>
+</div>
+<div class="tags">
   
 
 </div>
 
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#course-instance_method" title="#course (instance method)">#<strong>course</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The course to which this chapter belongs.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name-instance_method" title="#name (instance method)">#<strong>name</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The name of the chapter.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#units-instance_method" title="#units (instance method)">#<strong>units</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The units contained in this chapter.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="course=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="course-instance_method">
+  
+    #<strong>course</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>The course to which this chapter belongs. This association is optional.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/chapter.rb', line 11</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Chapter (class)">Chapter</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] course
+</span>  <span class='comment'>#   The course to which this chapter belongs. This association is optional.
+</span>  <span class='id identifier rubyid_belongs_to'>belongs_to</span> <span class='symbol'>:course</span><span class='comma'>,</span> <span class='symbol'>:optional</span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
+
+  <span class='comment'># @!attribute [rw] units
+</span>  <span class='comment'>#   The units contained in this chapter. If a chapter is destroyed, its units will also be destroyed.
+</span>  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:units</span><span class='comma'>,</span> <span class='symbol'>:dependent</span> <span class='op'>=&gt;</span> <span class='symbol'>:destroy</span>
+
+  <span class='comment'># Validates the presence of a name for this chapter.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span>
+
+  <span class='comment'># Validates the presence of a course for this chapter, unless validation is being skipped.
+</span>  <span class='id identifier rubyid_validates'>validates</span> <span class='symbol'>:course</span><span class='comma'>,</span> <span class='label'>presence:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>unless:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_validation_context'>validation_context</span> <span class='op'>==</span> <span class='symbol'>:skip_course</span> <span class='rbrace'>}</span>
+
+  <span class='comment'># Allows the acceptance of nested attributes for units.
+</span>  <span class='id identifier rubyid_accepts_nested_attributes_for'>accepts_nested_attributes_for</span> <span class='symbol'>:units</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="name=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="name-instance_method">
+  
+    #<strong>name</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns The name of the chapter.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The name of the chapter.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/chapter.rb', line 11</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Chapter (class)">Chapter</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] course
+</span>  <span class='comment'>#   The course to which this chapter belongs. This association is optional.
+</span>  <span class='id identifier rubyid_belongs_to'>belongs_to</span> <span class='symbol'>:course</span><span class='comma'>,</span> <span class='symbol'>:optional</span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
+
+  <span class='comment'># @!attribute [rw] units
+</span>  <span class='comment'>#   The units contained in this chapter. If a chapter is destroyed, its units will also be destroyed.
+</span>  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:units</span><span class='comma'>,</span> <span class='symbol'>:dependent</span> <span class='op'>=&gt;</span> <span class='symbol'>:destroy</span>
+
+  <span class='comment'># Validates the presence of a name for this chapter.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span>
+
+  <span class='comment'># Validates the presence of a course for this chapter, unless validation is being skipped.
+</span>  <span class='id identifier rubyid_validates'>validates</span> <span class='symbol'>:course</span><span class='comma'>,</span> <span class='label'>presence:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>unless:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_validation_context'>validation_context</span> <span class='op'>==</span> <span class='symbol'>:skip_course</span> <span class='rbrace'>}</span>
+
+  <span class='comment'># Allows the acceptance of nested attributes for units.
+</span>  <span class='id identifier rubyid_accepts_nested_attributes_for'>accepts_nested_attributes_for</span> <span class='symbol'>:units</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="units=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="units-instance_method">
+  
+    #<strong>units</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>The units contained in this chapter. If a chapter is destroyed, its units will also be destroyed.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/chapter.rb', line 11</span>
+
+<span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Chapter (class)">Chapter</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="ApplicationRecord.html" title="ApplicationRecord (class)">ApplicationRecord</a></span></span>
+  <span class='comment'># @!attribute [rw] course
+</span>  <span class='comment'>#   The course to which this chapter belongs. This association is optional.
+</span>  <span class='id identifier rubyid_belongs_to'>belongs_to</span> <span class='symbol'>:course</span><span class='comma'>,</span> <span class='symbol'>:optional</span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
+
+  <span class='comment'># @!attribute [rw] units
+</span>  <span class='comment'>#   The units contained in this chapter. If a chapter is destroyed, its units will also be destroyed.
+</span>  <span class='id identifier rubyid_has_many'>has_many</span> <span class='symbol'>:units</span><span class='comma'>,</span> <span class='symbol'>:dependent</span> <span class='op'>=&gt;</span> <span class='symbol'>:destroy</span>
+
+  <span class='comment'># Validates the presence of a name for this chapter.
+</span>  <span class='id identifier rubyid_validates_presence_of'>validates_presence_of</span> <span class='symbol'>:name</span>
+
+  <span class='comment'># Validates the presence of a course for this chapter, unless validation is being skipped.
+</span>  <span class='id identifier rubyid_validates'>validates</span> <span class='symbol'>:course</span><span class='comma'>,</span> <span class='label'>presence:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>unless:</span> <span class='tlambda'>-&gt;</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_validation_context'>validation_context</span> <span class='op'>==</span> <span class='symbol'>:skip_course</span> <span class='rbrace'>}</span>
+
+  <span class='comment'># Allows the acceptance of nested attributes for units.
+</span>  <span class='id identifier rubyid_accepts_nested_attributes_for'>accepts_nested_attributes_for</span> <span class='symbol'>:units</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+</div>
+
       <div id="footer">
-  Generated on Sun Oct  1 14:24:03 2023 by
+  Generated on Wed Oct  4 09:17:55 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>

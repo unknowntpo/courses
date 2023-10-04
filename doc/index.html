@@ -68,17 +68,28 @@ application up and running.</p>
 
 <ul>
   <li>
-    <p>Ruby version</p>
+    <p>Ruby version: <code>3.2.2</code></p>
   </li>
   <li>
     <p>System dependencies</p>
   </li>
-  <li>
-    <p>Configuration</p>
-  </li>
-  <li>
-    <p>Database creation</p>
-  </li>
+</ul>
+
+<p>gem I used</p>
+
+<ul>
+  <li>FactoryBot</li>
+  <li></li>
+  <li>Database creation</li>
+</ul>
+
+<p><code>
+$ rails db:setup
+$ rails db:migrate
+$ rails db:seed
+</code></p>
+
+<ul>
   <li>
     <p>Database initialization</p>
   </li>
@@ -91,26 +102,14 @@ application up and running.</p>
   <li>
     <p>Deployment instructions</p>
   </li>
+  <li>
+    <p>Documentation</p>
+  </li>
 </ul>
 
-<p>swagger:</p>
+<p>Use <code>yard</code> to generate latest documentation.</p>
 
-<p>Use this comand to generate rswag integration test</p>
-
-<p>```
-$ rails g rspec:swagger API::V1::CoursesController –spec_path integration</p>
-
-<p>Generate swagger yaml file</p>
-
-<p><code>
-$ rake rswag
-</code></p>
-
-<p>Ref: <a href="https://github.com/rswag/rswag#getting-started">Rswag Github</a></p>
-
-<ul>
-  <li>…</li>
-</ul>
+<p>Then use <code>yard server</code> to run local yard server.</p>
 
 <h2 id="graphql">Graphql</h2>
 
@@ -136,10 +135,17 @@ query {
   }
 }
 </code></p>
+
+<p>Unfinished:</p>
+
+<ul>
+  <li>Use Dataloader to avoid (N + 1) problem.</li>
+  <li>Use cache to avoid querying DB too often.</li>
+</ul>
 </div></div>
 
       <div id="footer">
-  Generated on Sun Oct  1 14:24:03 2023 by
+  Generated on Wed Oct  4 09:17:55 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>
