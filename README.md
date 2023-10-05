@@ -75,7 +75,8 @@ $ yard server
 
 GraphQL API Endpoint: https://hahow-courses-manager-2b2aea0eb45b.herokuapp.com/graphql
 
-Unfinished:
+## Unfinished:
 
 - Use Dataloader to avoid (N + 1) problem.
 - Use cache to avoid querying DB too often.
+- Use [Optimistic Locking](https://api.rubyonrails.org/classes/ActiveRecord/Locking/Optimistic.html) to avoid race condition.
