@@ -11,7 +11,11 @@ module Mutations
 
     argument :course_id, ID, "The id of course", required: true
 
-    argument :chapters_input, GraphQL::Types::JSON, "A hash where the key is chapter.id and the value is the desired position", required: true
+    argument :chapters_input, GraphQL::Types::JSON, required: true, description: 'A hash where the key is chapter.id and the value is the desired position,
+ There are some spec of this chapters_input:
+ - all keys (chapters.id) must belongs to the course_id, and every chapter.id belongs to course_id should be provided.
+ - position should be in the range [0, chapters.length)
+ - The position should not overlapped. e.g. This input overlapped at position 1, {"33": 0, "34": 0, "35": 1}'
 
     # chapters_input is a hash from chapter_id (string) to position (int)
     def resolve(course_id:, chapters_input:)
