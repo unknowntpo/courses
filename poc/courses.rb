@@ -9,17 +9,17 @@ module POC
     attr_accessor :id, :name, :lecturer, :description, :chapters
 
     # chapter: [] of chapter
-    def initialize(name, lecturer, description, chapters)
+    def initialize(name, lecturer, description, @chapters)
       @id = $course_seq
       $course_seq += 1
       @name = name
       @lecturer = lecturer
       @description = description
-      @chapters = chapters
+      @chapters = @chapters
     end
 
-    def self.create(name, lecturer, description, chapters)
-      new_course = POC::Course.new(name, lecturer, description, chapters)
+    def self.create(name, lecturer, description, @chapters)
+      new_course = POC::Course.new(name, lecturer, description, @chapters)
       $course_table << new_course
       new_course
     end
