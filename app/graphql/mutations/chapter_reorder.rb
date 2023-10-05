@@ -41,6 +41,15 @@ module Mutations
           raise GraphQL::ExecutionError, "should provide all chapters whose course_id is #{course_id}"
         end
 
+        pos_out_of_bound_input = get_pos_out_of_bound_ids(chapters_input)
+        unless pos_out_of_bound_input.length == 0
+          e = {
+            "cause" => "position out-of-bound",
+            "position out-of-bound chapters_input" => pos_out_of_bound_input,
+          }
+          return { course: nil, error: e }
+        end
+
         overlapped_ids = get_overlapped_ids(chapters_input)
 
         puts "length: #{overlapped_ids.length}"
@@ -72,6 +81,13 @@ module Mutations
     end
 
     private
+
+    # get_pos_out_of_bound_ids gets the ids which position is not in
+    # valid range [0, chapters_input.length)
+    def get_pos_out_of_bound_ids(chapters_input)
+      len = chapters_input.length
+      chapters_input.select { |id, pos| pos >= len }
+    end
 
     # chapters_input will be Hash from chapter_id (String) to position (Int)
     def get_overlapped_ids(chapters_input)

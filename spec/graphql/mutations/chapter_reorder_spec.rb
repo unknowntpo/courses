@@ -109,6 +109,9 @@ module Mutations
           end
         end
 
+        # { 33:0, 34:1, 38:2 } valid
+        # { 33:0, 34:3, 38:2 } valid, should return {34:3}
+
         context "position not in [0, chapters.length)" do
           let!(:chapters_order) do
             chapters = Chapter.where("course_id": course.id)
@@ -117,10 +120,14 @@ module Mutations
             puts "chapters: #{JSON.pretty_generate(chapters.to_json)}"
 
             chapters.each_with_index.map do |ch, i|
+              # make ch of i==0 position out-of-bound
               ch.position = chapters.length - i
             end
             chapters.map { |ch| [ch.id, ch.position] }.to_h
           end
+          let!(:out_of_bound_ids) {
+            chapters_order.select { |id, pos| pos >= chapters_order.length }
+          }
           let!(:variables) do
             {
               "input": {
@@ -139,7 +146,10 @@ module Mutations
 
             puts "chapters_order: #{JSON.pretty_generate(chapters_order)}"
 
-            expect(error[:cause]).to eq("should provide all chapters whose course_id is #{course.id}")
+            expect(error).to include(
+              "cause" => "position out-of-bound",
+              "position out-of-bound chapters_input" => out_of_bound_ids.transform_keys { |id| id.to_s },
+            )
             expect(data).to be_nil
           end
         end
