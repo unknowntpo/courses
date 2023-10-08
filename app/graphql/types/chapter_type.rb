@@ -8,6 +8,7 @@ module Types
     field :position, Integer
     field :created_at, GraphQL::Types::ISO8601DateTime
     field :updated_at, GraphQL::Types::ISO8601DateTime
-    field :units, [UnitType]
+    field :units, [UnitType], null: false,
+                              resolver: Resolvers::GetUnits
   end
 end

@@ -8,6 +8,7 @@ module Types
     field :description, String
     field :created_at, GraphQL::Types::ISO8601DateTime
     field :updated_at, GraphQL::Types::ISO8601DateTime
-    field :chapters, [ChapterType]
+    field :chapters, [ChapterType], null: false,
+                                    resolver: Resolvers::GetChapters
   end
 end

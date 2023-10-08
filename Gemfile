@@ -47,6 +47,7 @@ gem "bootsnap", require: false
 gem "rack-cors"
 
 gem "graphql"
+gem "graphql-batch"
 
 # for db:seed
 gem "faker"
