@@ -4,11 +4,8 @@ module Loaders
       @model = model
     end
 
-    def perform(id)
-      puts "model: #{@model.inspect}"
-      course = @model.find_by(id: id)
-      fulfill(course.id, course)
-      course
+    def perform(ids)
+      @model.where(id: ids).each { |course| fulfill(course.id, course) }
     end
   end
 end

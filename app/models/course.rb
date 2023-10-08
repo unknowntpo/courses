@@ -52,7 +52,7 @@ class Course < ApplicationRecord
 
   # Fetches all courses, with caching.
   # @return [Array<Course>] All courses.
-  def self.all_courses
+def self.all_courses
     # FIXME: Disable cache until we figure out how to make it behave correctly.
     # courses = Rails.cache.fetch(cache_key, expires_in: 12.hours) do
     #   Course.all.to_a

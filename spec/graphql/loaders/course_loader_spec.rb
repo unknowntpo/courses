@@ -12,5 +12,13 @@ RSpec.describe Loaders::CourseLoader do
       end
       expect(result).to eq(course1)
     end
+    it "should load many courses" do
+      ids = [course1.id, course2.id]
+      result = GraphQL::Batch.batch do
+        Loaders::CourseLoader.for(Course).load_many(ids)
+      end
+      puts "result: #{result}"
+      expect(result).to contain_exactly(course1, course2)
+    end
   end
 end
