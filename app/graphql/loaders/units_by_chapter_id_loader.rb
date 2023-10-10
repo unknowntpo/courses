@@ -11,6 +11,8 @@ module Loaders
       units_by_chapter_id.each do |chapter_id, units|
         fulfill(chapter_id, units)
       end
+      chapter_ids.each { |id| fulfill(id, nil) unless fulfilled?(id) }
+      chapter_ids
     end
   end
 end

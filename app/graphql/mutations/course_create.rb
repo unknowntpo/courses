@@ -26,7 +26,8 @@ module Mutations
         course_attrs[:chapters].each do |chapter_attr|
           chapter_attr[:course_id] = course.id
           chapter = Chapter.create!(chapter_attr.to_h.except(:units))
-          chapter_attr["units"]&.each do |unit_attr|
+          puts "chapter_attr: #{chapter_attr.inspect}"
+          chapter_attr[:units].each do |unit_attr|
             unit_attr[:chapter_id] = chapter.id
             unit = Unit.create!(unit_attr.to_h)
           end

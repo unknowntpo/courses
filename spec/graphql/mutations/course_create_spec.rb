@@ -25,7 +25,7 @@ module Mutations
           error
         }
       }
-        GQL
+      GQL
     end
     context "create" do
       context "succeed" do
@@ -76,30 +76,32 @@ module Mutations
           all_courses = ::Course.all
           puts "all_courses: #{all_courses.inspect}"
 
+          puts "all units: #{Unit.all.inspect}"
+
           expect(data).to include(
-            "id" => new_course.id.to_s,
-            "name" => new_course.name,
-            "lecturer" => new_course.lecturer,
-            "description" => new_course.description,
-            "chapters" => a_collection_containing_exactly(
-              *new_course.chapters.map do |chapter|
-              hash_including(
-                "name" => chapter[:name],
-                "position" => chapter[:position],
-                "units" => a_collection_containing_exactly(
-                  *chapter.units.map do |unit|
-                  hash_including(
-                    "name" => unit[:name],
-                    "description" => unit[:description],
-                    "content" => unit[:content],
-                    "position" => unit[:position],
-                  )
-                end
-                ),
-              )
-            end
-            ),
-          )
+                            "id" => new_course.id.to_s,
+                            "name" => new_course.name,
+                            "lecturer" => new_course.lecturer,
+                            "description" => new_course.description,
+                            "chapters" => a_collection_containing_exactly(
+                              *new_course.chapters.map do |chapter|
+                                hash_including(
+                                  "name" => chapter[:name],
+                                  "position" => chapter[:position],
+                                  "units" => a_collection_containing_exactly(
+                                    *chapter.units.map do |unit|
+                                      hash_including(
+                                        "name" => unit[:name],
+                                        "description" => unit[:description],
+                                        "content" => unit[:content],
+                                        "position" => unit[:position],
+                                      )
+                                    end
+                                  ),
+                                )
+                              end
+                            ),
+                          )
         end
       end
     end
@@ -128,7 +130,7 @@ module Mutations
                     {
                       "name": "Primary Type",
                       "description": "easy",
-                    # "content": "int, string,...",
+                      # "content": "int, string,...",
                     },
                   ],
                 },

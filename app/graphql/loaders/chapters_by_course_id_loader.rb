@@ -9,6 +9,8 @@ module Loaders
       chapters_by_course_id.each do |course_id, chapters|
         fulfill(course_id, chapters)
       end
+      course_ids.each { |id| fulfill(id, nil) unless fulfilled?(id) }
+      course_ids
     end
   end
 end
