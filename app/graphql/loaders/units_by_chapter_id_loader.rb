@@ -7,8 +7,8 @@ module Loaders
     end
 
     def perform(chapter_ids)
-      chapter_ids.each do |chapter_id|
-        units = @model.where(chapter_id: chapter_id)
+      units_by_chapter_id = @model.where(chapter_id: chapter_ids).group_by(&:chapter_id)
+      units_by_chapter_id.each do |chapter_id, units|
         fulfill(chapter_id, units)
       end
     end
