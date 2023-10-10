@@ -13,11 +13,7 @@ module Types
     field :chapters, [ChapterType], null: false
 
     def chapters
-      puts "objectid: #{object.as_json}"
-      Loaders::ChaptersByCourseIdLoader.for(Chapter).load([object.id])
-      # puts "chapters: #{chapters}"
-      # chapters
-      # Event, :category_id, merge: -> { order(id: :asc) }
+      Loaders::ChaptersByCourseIdLoader.for(Chapter).load(object.id)
     end
   end
 end

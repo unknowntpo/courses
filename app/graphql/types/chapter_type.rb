@@ -8,7 +8,10 @@ module Types
     field :position, Integer
     field :created_at, GraphQL::Types::ISO8601DateTime
     field :updated_at, GraphQL::Types::ISO8601DateTime
-    field :units, [UnitType], null: false,
-                              resolver: Resolvers::GetUnits
+    field :units, [UnitType], null: false
+
+    def units
+      Loaders::UnitsByChapterIdLoader.for(Unit).load(object.id)
+    end
   end
 end
