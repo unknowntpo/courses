@@ -8,5 +8,6 @@ module Types
     field :chapter_reorder, mutation: Mutations::ChapterReorder, description: "Reorder chapters in a course"
 
     field :unit_update, mutation: Mutations::UnitUpdate, description: "Update fields in a unit"
+    field :unit_reorder, mutation: Mutations::UnitReorder, description: "Reorder units in a chapter"
   end
 end
