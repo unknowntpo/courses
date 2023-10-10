@@ -61,6 +61,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "rswag"
   gem "graphiql-rails"
+  gem "tracer"
 end
 
 group :development do

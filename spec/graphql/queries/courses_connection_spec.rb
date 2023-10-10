@@ -58,28 +58,28 @@ module Queries
           # puts "edges: #{JSON.pretty_generate(edges)}"
 
           expect(page_info).to eq(
-            "startCursor" => "MQ",
-            "endCursor" => "MQ",
-            "hasPreviousPage" => false,
-            "hasNextPage" => false,
-          )
+                                 "startCursor" => "MQ",
+                                 "endCursor" => "MQ",
+                                 "hasPreviousPage" => false,
+                                 "hasNextPage" => false,
+                               )
 
           data.each_with_index do |course_data, index|
             course = ::Course.find(course_data["id"].to_i)
             expect(course_data).to include(
-              "id" => course.id.to_s,
-              "name" => course.name,
-              "lecturer" => course.lecturer,
-              "description" => course.description,
-              "chapters" => a_collection_containing_exactly(
-                *course.chapters.map do |chapter|
-                hash_including(
-                  "name" => chapter[:name],
-                  "position" => chapter[:position],
-                )
-              end
-              ),
-            )
+                                     "id" => course.id.to_s,
+                                     "name" => course.name,
+                                     "lecturer" => course.lecturer,
+                                     "description" => course.description,
+                                     "chapters" => a_collection_containing_exactly(
+                                       *course.chapters.map do |chapter|
+                                         hash_including(
+                                           "name" => chapter[:name],
+                                           "position" => chapter[:position],
+                                         )
+                                       end
+                                     ),
+                                   )
           end
         end
       end

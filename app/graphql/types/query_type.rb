@@ -23,7 +23,7 @@ module Types
 
     # TODO: remove me
     field :test_field, String, null: false,
-                               description: "An example field added by the generator"
+          description: "An example field added by the generator"
 
     def test_field
       "Hello World!"
@@ -34,5 +34,9 @@ module Types
 
     field :courses, Types::CourseType.connection_type,
           description: "Fetches all courses with chapters and units", null: false
+
+    def courses
+      Course.all
+    end
   end
 end

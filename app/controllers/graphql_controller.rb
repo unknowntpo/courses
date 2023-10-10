@@ -11,8 +11,9 @@ class GraphqlController < ApplicationController
     context = {
       # Query context goes here, for example:
       # current_user: current_user,
-      chapter_loader: Loaders::ChapterLoader.new,
-      unit_loader: Loaders::UnitLoader.new,
+      # course_loader: Loaders::CourseLoader.new(Course),
+      # chapter_loader: Loaders::ChapterLoader.new(Chapter),
+      # unit_loader: Loaders::UnitLoader.new(unit),
     }
     result = CoursesManagerSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
